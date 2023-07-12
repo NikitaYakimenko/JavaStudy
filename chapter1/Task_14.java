@@ -1,49 +1,49 @@
 package chapter1;
 
-import java.util.Scanner;
-
 public class Task_14 {
     public static void main(String[] args) {
+        double x = 32.5;
+        double y = 42.6;
+
+        double a = 53.2;
+        double b = 12.9;
+
+        double n = -1.5;
+
         // а
-        System.out.print("а:\nВведите x: ");
-        Scanner inputX = new Scanner(System.in);
-        double x = inputX.nextDouble();
-        System.out.println(2 * x);
+        System.out.println("\nа: " + 2 * x + "\n");
 
         // б
-        System.out.println("б:\n" + Math.sin(x) + "\n");
+        System.out.println("б: " + Math.sin(x) + "\n");
 
         // в
-        System.out.println("в:\n" + Math.pow(x, 2) + "\n");
+        System.out.println("в: " + Math.pow(a, 2) + "\n");
 
         // г
-        System.out.println("г:\n" + Math.sqrt(x) + "\n");
+        System.out.println("г: " + Math.sqrt(x) + "\n");
 
         // д
-        System.out.println("д:\n" + Math.abs(x) + "\n");
+        System.out.println("д: " + Math.abs(n) + "\n");
 
         // е
-        System.out.println("е:\n" + 5 * Math.cos(x) + "\n");
+        System.out.println("е: " + 5 * Math.cos(y) + "\n");
 
         // ж
-        System.out.println("ж:\n" + -7.5 * Math.pow(x, 2) + "\n");
+        System.out.println("ж: " + -7.5 * Math.pow(a, 2) + "\n");
 
         // з
-        System.out.println("з:\n" + 3 * Math.sqrt(x) + "\n");
+        System.out.println("з: " + 3 * Math.sqrt(x) + "\n");
 
         // и
-        System.out.print("и:\nВведите y: ");
-        Scanner inputY = new Scanner(System.in);
-        double y = inputY.nextDouble();
-        System.out.println((Math.sin(x) * Math.cos(y) + Math.cos(x) * Math.sin(y)) + "\n");
+        System.out.println("и: " + (Math.sin(a) * Math.cos(b) + Math.cos(a) * Math.sin(b)) + "\n");
 
         // к
-        System.out.println("к:\n" + x * Math.sqrt(2 * y) + "\n");
+        System.out.println("к: " + a * Math.sqrt(2 * b) + "\n");
 
         // л
-        System.out.println("л:\n" + (3 * Math.sin(2 * x) * Math.cos(3 * y)) + "\n");
+        System.out.println("л: " + (3 * Math.sin(2 * a) * Math.cos(3 * b)) + "\n");
 
         // м
-        System.out.println("м:\n" + -5 * Math.sqrt(x + Math.sqrt(y)));
+        System.out.println("м: " + -5 * Math.sqrt(x + Math.sqrt(y)));
     }
 }
