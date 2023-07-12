@@ -11,16 +11,6 @@ public class Task_15 {
         double m = Math.random();
         double n = Math.random();
 
-
-//        double x = 32.5;
-//
-//        double a = 53.2;
-//        double b = 12.9;
-//        double c = 41.2;
-//
-//        double m = 1.9;
-//        double n = 3.2;
-
         // а
         System.out.println("а: " + -1 / Math.pow(x, 2) + "\n");
 

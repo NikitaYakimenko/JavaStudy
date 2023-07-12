@@ -2,13 +2,13 @@ package chapter1;
 
 public class Task_14 {
     public static void main(String[] args) {
-        double x = 32.5;
-        double y = 42.6;
+        double x = Math.random();
+        double y = Math.random();
 
-        double a = 53.2;
-        double b = 12.9;
+        double a = Math.random();
+        double b = Math.random();
 
-        double n = -1.5;
+        double n = -Math.random();
 
         // а
         System.out.println("\nа: " + 2 * x + "\n");
