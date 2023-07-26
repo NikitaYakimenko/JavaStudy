@@ -12,6 +12,7 @@ public class Task_27 {
 
         System.out.println("Расстояние от точки с высотой " + myHeight + " км до горизонта Земли: " + getHorizonDistance(R, myHeight) + " км");
     }
+
     private static double getHorizonDistance(double planetR, double height) {
         double a = planetR;
         double b = planetR + height;

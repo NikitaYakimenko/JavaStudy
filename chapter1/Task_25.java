@@ -10,6 +10,7 @@ public class Task_25 {
 
         System.out.println("P квадрата со стороной " + mySquareEdge + " y.e. = " + getSquareP(mySquareEdge) + " y.e.");
     }
+
     private static double getSquareP(double squareEdge) {
         return 4 * squareEdge;
     }

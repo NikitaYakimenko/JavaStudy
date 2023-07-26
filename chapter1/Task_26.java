@@ -10,6 +10,7 @@ public class Task_26 {
 
         System.out.println("D окружности c радиусом " + myCircleR + " y.e. = " + getCircleD(myCircleR) + " y.e.");
     }
+
     private static double getCircleD(double circleR) {
         return 2 * circleR;
     }
