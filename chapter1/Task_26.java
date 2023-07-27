@@ -8,10 +8,10 @@ public class Task_26 {
         System.out.print("Введите радиус: ");
         double myCircleR = input.nextDouble();
 
-        System.out.println("D окружности c радиусом " + myCircleR + " y.e. = " + getCircleD(myCircleR) + " y.e.");
+        System.out.println("D окружности c радиусом " + myCircleR + " у.е. = " + getCircleD(myCircleR) + " у.е.");
     }
 
-    private static double getCircleD(double circleR) {
-        return 2 * circleR;
+    private static String getCircleD(double circleR) {
+        return String.format("%.2f", 2 * circleR);
     }
 }

@@ -8,15 +8,15 @@ public class Task_28 {
         System.out.print("Введите высоту: ");
         double myCubeEdge = input.nextDouble();
 
-        System.out.println("V куба со стороной " + myCubeEdge + " y.e. = " + getCubeV(myCubeEdge) + " y.e.");
-        System.out.println("S поверхности куба со стороной " + myCubeEdge + " y.e. = " + getCubeS(myCubeEdge) + " y.e.");
+        System.out.println("V куба со стороной " + myCubeEdge + " у.е. = " + getCubeV(myCubeEdge) + " у.е.");
+        System.out.println("S поверхности куба со стороной " + myCubeEdge + " у.е. = " + getCubeS(myCubeEdge) + " у.е.");
     }
 
-    private static double getCubeV(double cubeEdge) {
-        return Math.pow(cubeEdge, 3);
+    private static String getCubeV(double cubeEdge) {
+        return String.format("%.2f", Math.pow(cubeEdge, 3));
     }
 
-    private static double getCubeS(double cubeEdge) {
-        return Math.pow(cubeEdge, 2) * 6;
+    private static String getCubeS(double cubeEdge) {
+        return String.format("%.2f", Math.pow(cubeEdge, 2) * 6);
     }
 }
