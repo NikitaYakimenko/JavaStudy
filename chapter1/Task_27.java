@@ -14,9 +14,8 @@ public class Task_27 {
     }
 
     private static String getHorizonDistance(double planetR, double height) {
-        double a = planetR;
-        double b = planetR + height;
+        double fullHeight = planetR + height;
 
-        return String.format("%.2f", Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2)));
+        return String.format("%.2f", Math.sqrt(Math.pow(planetR, 2) + Math.pow(fullHeight, 2)));
     }
 }
