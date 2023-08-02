@@ -1,9 +1,9 @@
-package maps;
+package collections;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class Maps {
+public class MyHashMap {
     /*
     преобразование любого объекта в число int
     hashcode() возвращает hash, полученный путем конвертации внутреннего адреса ключа в число
@@ -17,7 +17,7 @@ public class Maps {
     если equal возвращает true, нода перезаписывается
     если equal возвращает false, нода добавляется в конец LinkedList
 
-    нода содержит: ключ, значение, hash ключа, ссылку на след. ноду
+    нода содержит: ключ, значение, hash ключа, ссылку на след.ноду
      */
     public static void main(String[] args) {
         Map<String, Integer> carIds = new HashMap<>();
