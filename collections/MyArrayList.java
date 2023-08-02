@@ -5,15 +5,18 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MyArrayList {
-    public static void main(String[] args) {
-        /*
-        ArrayList can only contain Objects
-        ArrayList does not have a fixed size (a default Array has one)
-        при объявлении ArrayList выделяется 10 ячеек, то есть создается массив типа Object с capacity = 10; size = 0
-        при добавлении 11-го элемента создается новый массив из 10 ячеек (значения копируются), в конец которого добавляются еще 10 новых пустых ячеек
+    /*
+    ArrayList can only contain Objects
+    ArrayList does not have a fixed size (a default Array has one)
+    при объявлении ArrayList выделяется 10 ячеек, то есть создается массив типа Object с capacity = 10; size = 0
+    при добавлении 11-го элемента создается новый массив из 10 ячеек (значения копируются), в конец которого добавляются еще 10 новых пустых ячеек
 
-        capacity можно указывать при инициализации, что сократит время добавления элементов
-         */
+    capacity можно указывать при инициализации, что сократит время добавления элементов
+
+    ArrayList реализует очень быстрый доступ к элементам
+     */
+    public static void main(String[] args) {
+
         ArrayList<String> carNames = new ArrayList<>(Arrays.asList("Toyota Yaris", "Toyota Vios", "Nissan Almera"));
 
         System.out.println("get third element: " + carNames.get(2)); // get element of index 2
