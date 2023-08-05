@@ -1,4 +1,4 @@
-package collections;
+package collections.examples;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +13,7 @@ public class MyHashMap {
 
     расположение ноды определяется выводом hashcode()
 
-    если hash одинковый, то ноды проверяются equal (индекс уже определен)
+    если hash одинаковый, то ноды проверяются equal (индекс уже определен)
     если equal возвращает true, нода перезаписывается
     если equal возвращает false, нода добавляется в конец LinkedList
 
