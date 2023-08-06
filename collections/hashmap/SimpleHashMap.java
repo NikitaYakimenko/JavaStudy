@@ -1,57 +1,54 @@
 package collections.hashmap;
 
 import java.util.Arrays;
+import static collections.hashmap.Node.setNextNode;
 
 public class SimpleHashMap<K, V> {
-    private Node[] array = new Node[4];
+    private Node[] map = new Node[4];
 
-    public Object get(K key) { // принимаем на вход любой тип
-        Key<K> keyClass = new Key<>(key); // создаем инстанс Key на основе входного объекта
+    void put(K key, V value) { // принимаем на вход любые типы
+        if (checkOccupancy()) {
+            addElements();
+        }
 
-        int hashcode = keyClass.hashCode(); // берем хеш-код от инстанса
-        System.out.println("get hashcode = " + hashcode);
+        int hashcode = key.hashCode(); // берем хеш-код от ключа
 
-        int index = (array.length - 1) & hashcode; // нормируем число для индекса
-        System.out.println("get index = " + index);
+        int index = (map.length - 1) & hashcode; // нормируем хеш-код в int для индекса
 
-        if (index > array.length) { // проверяем валидность входного объекта
+        if (index > map.length) {
+            System.out.println("invalid index");
+        }
+
+        if (map[index] != null) {
+            setNextNode(map[index], new Node<>(hashcode, key, value));
+        } else {
+            map[index] = new Node<>(hashcode, key, value);
+        }
+
+        System.out.println("PUT\nput value \"" + value + "\" to index " + index + "\nhashcode = " + hashcode);
+        System.out.println(Arrays.toString(map) + "\n");
+    }
+
+    Object get(K key) {
+
+        int hashcode = key.hashCode();
+
+        int index = (map.length - 1) & hashcode;
+
+        if (index > map.length) {
             System.out.println("error");
             return null;
         }
 
-        System.out.println("got value of index " + index);
-        System.out.println(Arrays.toString(array) + "\n");
+        System.out.println("GET\ngot value of index " + index + ": " + map[index] + " (value: \"" + map[index].getValue() + "\")" + "\nhashcode = " + hashcode + "\n");
 
-        return array[index];
-    }
-
-    public void put(K key, V value) {
-        if (checkOccupancy()) {
-            doubleSize();
-        }
-
-        Key<K> keyClass = new Key<>(key);
-
-        int hashcode = keyClass.hashCode();
-        System.out.println("put hashcode = " + hashcode);
-
-        int index = (array.length - 1) & hashcode;
-        System.out.println("put index = " + index);
-
-        if (index > array.length) {
-            System.out.println("invalid index");
-        }
-
-        array[index] = new Node<>(hashcode, key, value, null);
-
-        System.out.println("put " + value + " to index " + index);
-        System.out.println(Arrays.toString(array) + "\n");
+        return map[index];
     }
 
     private boolean checkOccupancy() { // проверяем не заполнен ли массив
         boolean isFull = true;
 
-        for (Object value : array) {
+        for (Object value : map) {
             if (value == null) {
                 isFull = false;
                 break;
@@ -60,7 +57,8 @@ public class SimpleHashMap<K, V> {
 
         return isFull;
     }
-    private void doubleSize() { // увеличиваем массив в два раза
-        array = Arrays.copyOf(array, array.length * 2);
+
+    private void addElements() { // увеличиваем массив на четыре ячейки
+        map = Arrays.copyOf(map, map.length + 4);
     }
 }

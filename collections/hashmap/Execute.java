@@ -2,30 +2,40 @@ package collections.hashmap;
 
 public class Execute {
     public static void main(String[] args) {
-        SimpleHashMap<String, String> myStringHashMap = new SimpleHashMap<>();
-        myStringHashMap.put("1", "One");
-        myStringHashMap.put("2", "Two");
-        System.out.println(myStringHashMap.get("1"));
-        System.out.println(myStringHashMap.get("2") + "\n");
+        SimpleHashMap<String, String> myStringHashMap = new SimpleHashMap<>(); // пример с key: String, value: String
+        myStringHashMap.put("zero", "Zero"); // ставим ноду на индекс 0
+        myStringHashMap.get("zero"); // вытаскиваем ту же ноду из индекса 0
+        myStringHashMap.put("one", "One"); // ставим ноду на индекс 2
+        myStringHashMap.put("one", "Two"); // ставим вторую ноду на индекс 2
+        Node abc = (Node) myStringHashMap.get("one"); // вытаскиваем первую ноду из индекса 2
+        System.out.println("First value at index 2: " + abc.getValue()); // смотрим ее первое значение ноды на индексе 2
+        System.out.println("Second value at index 2: " + abc.nextNode.getValue()); // смотрим значение следующей ноды на индексе 2
+        System.out.println("Third node at index 2: " + abc.nextNode.nextNode); // проверяем нулловость ссылки во второй ноде
 
-//        SimpleHashMap<Integer, String> myIntegerHashMap = new SimpleHashMap<>();
-//        myIntegerHashMap.put(1, "Zero");
-//        System.out.println(myIntegerHashMap.get(1));
-//        myIntegerHashMap.put(1, "One");
-//        myIntegerHashMap.put(2, "Two");
-//        myIntegerHashMap.put(3, "Three");
-//        myIntegerHashMap.put(4, "Four");
-//        myIntegerHashMap.put(5, "Five");
-//        myIntegerHashMap.put(6, "Six");
-//        myIntegerHashMap.put(7, "Seven");
-//        myIntegerHashMap.put(8, "Eight");
-//        myIntegerHashMap.put(9, "Nine");
-//        myIntegerHashMap.put(10, "Ten");
+//        SimpleHashMap<Integer, Double> myIntegerHashMap = new SimpleHashMap<>(); // пример с key: Integer, value: Double
+//        myIntegerHashMap.put(0, 0.0);
+//        myIntegerHashMap.get(0);
+//        myIntegerHashMap.put(1, 1.0);
+//        myIntegerHashMap.get(1);
 
-//        SimpleHashMap<KeyObject, ValueObject> myObjectHashMap = new SimpleHashMap<>();
+//        myIntegerHashMap.put(2, 2.0);
+//        myIntegerHashMap.put(3, 3.0);
+//        myIntegerHashMap.put(4, 4.0);
+//        myIntegerHashMap.put(5, 5.0);
+//        myIntegerHashMap.put(6, 6.0);
+//        myIntegerHashMap.put(7, 7.0);
+//        myIntegerHashMap.put(8, 8.0);
+//        myIntegerHashMap.put(9, 9.0);
+//        myIntegerHashMap.put(10, 10.0);
+
+//        SimpleHashMap<KeyObject, ValueObject> myObjectHashMap = new SimpleHashMap<>(); // пример с key: Object, value: Object
 //        KeyObject myKey = new KeyObject();
 //        myObjectHashMap.put(myKey, new ValueObject());
-//        System.out.println(myObjectHashMap.get(myKey));
+//        myObjectHashMap.get(myKey);
+//
+//        KeyObject myKey1 = new KeyObject();
+//        myObjectHashMap.put(myKey1, new ValueObject());
+//        myObjectHashMap.get(myKey1);
     }
 }
 
