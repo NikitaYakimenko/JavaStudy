@@ -20,8 +20,8 @@ public class Node<K, V> {
         currentNode.nextNode = nextNode;
     }
 
-    String toString(K key, V value) {
+    @Override
+    public String toString() {
         return key + ": " + value;
     }
-
 }

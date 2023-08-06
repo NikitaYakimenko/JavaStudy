@@ -25,7 +25,7 @@ public class SimpleHashMap<K, V> {
             map[index] = new Node<>(hashcode, key, value);
         }
 
-        System.out.println("PUT\nput value \"" + value + "\" to index " + index + "\nhashcode = " + hashcode);
+        System.out.println("PUT\nput node \"" + map[index].toString() + "\" to index " + index + "\nhashcode = " + hashcode);
         System.out.println(Arrays.toString(map) + "\n");
     }
 
@@ -40,7 +40,7 @@ public class SimpleHashMap<K, V> {
             return null;
         }
 
-        System.out.println("GET\ngot value of index " + index + ": " + map[index] + " (value: \"" + map[index].getValue() + "\")" + "\nhashcode = " + hashcode + "\n");
+        System.out.println("GET\ngot node of index " + index + ": \"" + map[index].toString() + "\"\nhashcode = " + hashcode + "\n");
 
         return map[index];
     }
