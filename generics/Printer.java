@@ -1,4 +1,4 @@
-package collections.generics;
+package generics;
 
 public class Printer <T> { // class uses any type
      T something;
