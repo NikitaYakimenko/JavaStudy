@@ -12,6 +12,10 @@ public class Node<K, V> {
         this.value = value;
     }
 
+    K getKey() {
+        return key;
+    }
+
     V getValue() {
         return value;
     }
