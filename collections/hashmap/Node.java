@@ -1,9 +1,9 @@
 package collections.hashmap;
 
 public class Node<K, V> {
-    int hash;
-    K key;
-    V value;
+    private int hash;
+    private K key;
+    private V value;
     Node<K, V> nextNode;
 
     Node(int hash, K key, V value) {

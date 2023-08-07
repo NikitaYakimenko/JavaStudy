@@ -5,8 +5,8 @@ import java.util.Arrays;
 import static collections.hashmap.Node.setNextNode;
 
 class SimpleHashMap<K, V> {
-    private int size = 4;
-    private Node[] map = new Node[size];
+    private int capacity = 4;
+    private Node[] map = new Node[capacity];
 
     void put(K key, V value) { // принимаем на вход любые типы
         if (checkOccupancy()) {
@@ -25,11 +25,11 @@ class SimpleHashMap<K, V> {
             putNode = map[index];
         }
 
-        System.out.println("PUT\nput node \"" + putNode + "\" to index " + index + "\nhashcode = " + hashcode);
+        System.out.println("PUT \"" + putNode + "\"");
         System.out.println(Arrays.toString(map) + "\n");
     }
 
-    Node get(K key) {
+    Object get(K key) {
         int hashcode = key.hashCode();
         int index = (map.length - 1) & hashcode;
 
@@ -38,14 +38,12 @@ class SimpleHashMap<K, V> {
             return null;
         }
 
-        System.out.println("GET\ngot node of index " + index + ": \"" + map[index] + "\"\nhashcode = " + hashcode + "\n");
+        System.out.println("GET \"" + map[index].getValue() + "\"\n");
 
-        return map[index];
+        return map[index].getValue();
     }
 
     void delete(K key, V value) { // удаляем ноду по ключу и значению
-        int hashcode = key.hashCode();
-        int index = (map.length - 1) & hashcode;
         final String deletedNode = key + ": " + value;
 
         for (int i = 0; i <= map.length - 1; i++) {
@@ -60,13 +58,21 @@ class SimpleHashMap<K, V> {
             }
         }
 
-        System.out.println("DELETE\ndeleted node " + deletedNode + " from index " + index + "\nhashcode = " + hashcode);
+        System.out.println("DELETE \"" + deletedNode + "\"");
         System.out.println(Arrays.toString(map) + "\n");
     }
 
     int size() {
-        System.out.println("map size: " + size);
-        return size;
+        int count = 0;
+
+        for (Node node : map) {
+            if (node != null) {
+                count += 1;
+            }
+        }
+
+        System.out.println("Size: " + count);
+        return count;
     }
 
     boolean containsKey(K key) {
@@ -80,6 +86,7 @@ class SimpleHashMap<K, V> {
             }
         }
 
+        System.out.println(containsKey);
         return containsKey;
     }
 
@@ -97,7 +104,8 @@ class SimpleHashMap<K, V> {
     }
 
     private void expand() { // увеличиваем массив на четыре ячейки
-        size += 4;
-        map = Arrays.copyOf(map, size);
+        capacity += 4;
+        System.out.println("map[] expanded: " + capacity);
+        map = Arrays.copyOf(map, capacity);
     }
 }

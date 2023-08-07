@@ -25,26 +25,27 @@ public class MyHashMap {
         carIds.put("Toyota Yaris", 1);
         carIds.put("Toyota Vios", 2);
         carIds.put("Nissan Almera", 3);
+        System.out.println(carIds.size());
 
         System.out.println(carIds);
-        System.out.println("get \"Nissan Almera\" id: " + carIds.get("Nissan Almera"));
-        System.out.println("check if key \"Toyota Vios\" exists: " + carIds.containsKey("Toyota Vios"));
-        System.out.println("check if value \"1\" exists: " + carIds.containsValue(1));
-
-        carIds.put("Toyota Vios", 4); // updates value of a key
-
-        System.out.println("check if value of key \"Toyota Vios\" was updated: " + carIds.get("Toyota Vios"));
-
-        carIds.replace("Ford Raptor", 5); // updates value only if a key exists
-        carIds.putIfAbsent("Toyota Yaris Ativ", 6); // puts a node only if a key doesn't exist yet
-
-        carIds.remove("Toyota Yaris Ativ");
-        System.out.println(carIds);
-
-        carIds.put(null, 0); // null keys are added to carIds[0]
-
-        for (Map.Entry<String, Integer> entry: carIds.entrySet()) { // HashMap output
-            System.out.println(entry.getKey() + ": " + entry.getValue());
-        }
+//        System.out.println("get \"Nissan Almera\" id: " + carIds.get("Nissan Almera"));
+//        System.out.println("check if key \"Toyota Vios\" exists: " + carIds.containsKey("Toyota Vios"));
+//        System.out.println("check if value \"1\" exists: " + carIds.containsValue(1));
+//
+//        carIds.put("Toyota Vios", 4); // updates value of a key
+//
+//        System.out.println("check if value of key \"Toyota Vios\" was updated: " + carIds.get("Toyota Vios"));
+//
+//        carIds.replace("Ford Raptor", 5); // updates value only if a key exists
+//        carIds.putIfAbsent("Toyota Yaris Ativ", 6); // puts a node only if a key doesn't exist yet
+//
+//        carIds.remove("Toyota Yaris Ativ");
+//        System.out.println(carIds);
+//
+//        carIds.put(null, 0); // null keys are added to carIds[0]
+//
+//        for (Map.Entry<String, Integer> entry: carIds.entrySet()) { // HashMap output
+//            System.out.println(entry.getKey() + ": " + entry.getValue());
+//        }
     }
 }
