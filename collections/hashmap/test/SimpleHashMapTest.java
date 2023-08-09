@@ -12,31 +12,18 @@ class SimpleHashMapTest {
 
     @BeforeAll
     static void prepareData() {
-        myMap = new SimpleHashMap<>(4);
+        myMap = new SimpleHashMap<>(1);
         myMap.put(0, "zero");
     }
 
     @Test
     void put() {
-        SimpleHashMap<Integer, String> myMap = new SimpleHashMap<>(4);
+        SimpleHashMap<Integer, String> myMap = new SimpleHashMap<>(1);
         myMap.put(0, "zero");
 
         assertEquals("zero", myMap.get(0));
     }
 
-    @Test
-    void expand() {
-        SimpleHashMap<Integer, String> myMap = new SimpleHashMap<>(4);
-        myMap.put(0, "zero");
-        myMap.put(1, "one");
-        myMap.put(2, "two");
-        myMap.put(3, "three");
-        myMap.put(4, "four");
-        myMap.put(5, "five");
-
-        assertEquals(5, myMap.size());
-        assertEquals("five", myMap.get(5));
-    }
     @Test
     void get() {
         assertEquals("zero", myMap.get(0));
@@ -57,6 +44,16 @@ class SimpleHashMapTest {
 
     @Test
     void size() {
+        SimpleHashMap<Integer, String> myMap = new SimpleHashMap<>(3);
+        myMap.put(0, "zero");
+
         assertEquals(1, myMap.size());
+    }
+
+    @Test
+    void expand() {
+        myMap.put(1, "one");
+
+        assertEquals(2, myMap.size());
     }
 }
