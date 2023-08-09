@@ -3,7 +3,7 @@ package generics;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Execute {
+public class Main {
     public static void main(String[] args) {
         // using class generics
         Printer<String> stringPrinter = new Printer<>("some string");

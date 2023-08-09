@@ -1,27 +1,29 @@
 package collections.hashmap;
 
-public class Node<K, V> {
-    private int hash;
-    private K key;
-    private V value;
-    Node<K, V> nextNode;
+public class Node <K, V> {
+    private final K key;
+    private final V value;
+    private Node<?, ?> nextNode;
 
-    Node(int hash, K key, V value) {
-        this.hash = hash;
+    public Node(K key, V value) {
         this.key = key;
         this.value = value;
     }
 
-    K getKey() {
+    public K getKey() {
         return key;
     }
 
-    V getValue() {
+    public V getValue() {
         return value;
     }
 
-    static <K, V> void setNextNode(Node<K, V> currentNode, Node<K, V> nextNode) {
-        currentNode.nextNode = nextNode;
+    public Node<?, ?> getNextNode() {
+        return this.nextNode;
+    }
+
+    public void setNextNode(Node<?, ?> nextNode) {
+        this.nextNode = nextNode;
     }
 
     @Override
