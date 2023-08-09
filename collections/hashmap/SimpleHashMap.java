@@ -5,8 +5,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 
 public class SimpleHashMap <K, V> {
-    private int capacity = 4;
-    private Node<K, V>[] map = new Node[capacity];
+    private int capacity;
+    private Node<K, V>[] map;
+
+    public SimpleHashMap(int capacity) {
+        map = new Node[capacity];
+    }
 
     public void put(K key, V value) { // принимаем на вход любые типы
         if (checkOccupancy()) {
