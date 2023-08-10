@@ -1,27 +1,26 @@
 package collections.hashmap.test;
 
 import collections.hashmap.SimpleHashMap;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class SimpleHashMapTest {
 
-    static SimpleHashMap<Integer, String> myMap;
+    SimpleHashMap<Integer, String> myMap;
 
-    @BeforeAll
-    static void prepareData() {
+    @BeforeEach
+    void prepareData() {
         myMap = new SimpleHashMap<>(1);
         myMap.put(0, "zero");
     }
 
     @Test
     void put() {
-        SimpleHashMap<Integer, String> myMap = new SimpleHashMap<>(1);
-        myMap.put(0, "zero");
+        myMap.put(1, "one");
 
-        assertEquals("zero", myMap.get(0));
+        assertEquals("one", myMap.get(1));
     }
 
     @Test
@@ -31,10 +30,10 @@ class SimpleHashMapTest {
 
     @Test
     void delete() {
-        myMap.put(2, "two");
-        myMap.delete(2, "two");
+        myMap.put(1, "one");
+        myMap.delete(1, "one");
 
-        assertNull(myMap.get(2));
+        assertNull(myMap.get(1));
     }
 
     @Test
@@ -44,9 +43,6 @@ class SimpleHashMapTest {
 
     @Test
     void size() {
-        SimpleHashMap<Integer, String> myMap = new SimpleHashMap<>(3);
-        myMap.put(0, "zero");
-
         assertEquals(1, myMap.size());
     }
 

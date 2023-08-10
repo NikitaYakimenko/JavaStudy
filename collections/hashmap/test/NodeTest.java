@@ -2,16 +2,17 @@ package collections.hashmap.test;
 
 import collections.hashmap.Node;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class NodeTest {
 
-    static Node<Integer, String> node;
+    Node<Integer, String> node;
 
-    @BeforeAll
-    static void prepareDate() {
+    @BeforeEach
+    void prepareDate() {
         node = new Node<>(1, "one");
     }
 

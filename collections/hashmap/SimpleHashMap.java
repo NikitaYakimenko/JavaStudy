@@ -39,7 +39,6 @@ public class SimpleHashMap <K, V> {
     }
 
     public void delete(K key, V value) { // удаляем ноду по ключу и значению
-
         for (int i = 0; i <= map.length - 1; i++) {
             if (map[i] != null) {
                 if (map[i].getKey().equals(key) & map[i].getValue().equals(value)) {
