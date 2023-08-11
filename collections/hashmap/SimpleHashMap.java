@@ -1,7 +1,5 @@
 package collections.hashmap;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Arrays;
 
 public class SimpleHashMap <K, V> {
@@ -17,35 +15,38 @@ public class SimpleHashMap <K, V> {
             expand();
         }
 
-        int hashcode = key.hashCode(); // берем хеш-код от ключа
-        int index = (map.length - 1) & hashcode; // нормируем хеш-код в int для индекса
+        int index = (map.length - 1) & key.hashCode(); // нормируем хеш-код в int для индекса
+        Node<K, V> newNode = new Node<>(key, value); // создаем новый узел с ключом и значением
 
-        if (map[index] != null) {
-            map[index].setNextNode(new Node<>(key, value));
-        } else {
-            map[index] = new Node<>(key, value);
-        }
-    }
+        if (map[index] == null) { // если в ячейке нет узла
+            map[index] = newNode; // присваиваем ей новый узел
+        } else { // если в ячейке есть узел
+            Node<?, ?> current = map[index]; // создаем переменную для текущего узла
 
-    public V get(@NotNull K key) {
-        int hashcode = key.hashCode();
-        int index = (map.length - 1) & hashcode;
+            while (current.getNextNode() != null) { // пока текущий узел имеет следующий узел
+                current = current.getNextNode(); // переходим к следующему узлу
+            }
 
-        if (map[index] == null) {
-            return null;
+            current.setNextNode(newNode); // присваиваем текущему узлу новый узел
         }
 
-        return map[index].getValue();
+        System.out.println(Arrays.toString(map));
     }
 
-    public void delete(K key, V value) { // удаляем ноду по ключу и значению
+    public Node<?, ?> get(K key) {
+        int index = (map.length - 1) & key.hashCode();
+
+        return map[index];
+    }
+
+    public void delete(K key, V value) { // удаляем узел по ключу и значению
         for (int i = 0; i <= map.length - 1; i++) {
             if (map[i] != null) {
                 if (map[i].getKey().equals(key) & map[i].getValue().equals(value)) {
-                    map[i] = null; // удаляем первую ноду
+                    map[i] = null; // удаляем первый узел
                 } else if (map[i].getNextNode() != null) {
                     if (map[i].getNextNode().getKey().equals(key) & map[i].getNextNode().getValue().equals(value)) {
-                        map[i].setNextNode(null); // или удаляем ссылку на следующую ноду
+                        map[i].setNextNode(null); // или удаляем ссылку на следующий узел
                     }
                 }
             }
