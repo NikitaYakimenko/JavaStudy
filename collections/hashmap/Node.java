@@ -2,8 +2,8 @@ package collections.hashmap;
 
 public class Node <K, V> {
     private final K key;
-    private final V value;
-    private Node<?, ?> nextNode;
+    private V value;
+    private Node<?, ?> nextNode = null;
 
     public Node(K key, V value) {
         this.key = key;
@@ -16,6 +16,10 @@ public class Node <K, V> {
 
     public V getValue() {
         return value;
+    }
+
+    public void setValue(V value) {
+        this.value = value;
     }
 
     public Node<?, ?> getNextNode() {
