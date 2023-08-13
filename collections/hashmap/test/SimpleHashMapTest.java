@@ -1,7 +1,6 @@
 package collections.hashmap.test;
 
 import collections.hashmap.SimpleHashMap;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -11,14 +10,32 @@ class SimpleHashMapTest {
     void put() {
         SimpleHashMap<String, String> myMap = new SimpleHashMap<>();
 
-        myMap.put("1", "String_0"); // индекс: 1, первый узел
-        assertEquals("String_0", myMap.get("1"));
+        myMap.put("1", "firstNodeValue"); // добавление нового узла
+        assertEquals("firstNodeValue", myMap.get("1"));
 
-        myMap.put("9", "String_1"); // индекс: 1, второй узел
-        assertEquals("String_1", myMap.getNode("1").getNextNode().getValue());
+        myMap.put("9", "secondNodeValue"); // добавление узла в список
+        assertEquals("secondNodeValue", myMap.get("9"));
 
-        myMap.put("1", "String_2"); // индекс: 1, замена 1 узла
-        assertEquals("String_2", myMap.getNode("1").getValue());
+        myMap.put("1", "newFirstNodeValue"); // замена значения существующего узла
+        assertEquals("newFirstNodeValue", myMap.get("1"));
+    }
+
+    @Test
+    void get() {
+        SimpleHashMap<String, String> myMap = new SimpleHashMap<>();
+
+        assertNull(myMap.get("1")); // пустой индекс
+
+        myMap.put("1", "firstNodeValue");
+        assertEquals("firstNodeValue", myMap.get("1")); // первый узел на индексе
+
+        myMap.put("9", "secondNodeValue");
+        assertEquals("secondNodeValue", myMap.get("9")); // второй узел на индексе
+
+        myMap.put("12", "thirdNodeValue");
+        assertEquals("thirdNodeValue", myMap.get("12")); // третий узел на индексе
+
+        assertNull(myMap.get("23")); // несуществующий ключ в непустом индексе
     }
 
 //    @Test
@@ -30,15 +47,18 @@ class SimpleHashMapTest {
 //        assertNull(myMap.get(1));
 //    }
 
-//    @Test
-//    void containsKey() {
-//        SimpleHashMap<String, String> myMap = new SimpleHashMap<>();
-//
-//        String key = "myKey";
-//        myMap.put(key, "String_0");
-//
-//        assertTrue(myMap.containsKey(key));
-//    }
+    @Test
+    void containsKey() {
+        SimpleHashMap<String, String> myMap = new SimpleHashMap<>();
+
+        assertFalse(myMap.containsKey("1")); // ключ не содержится ни в одном узле связанных списков массива
+
+        myMap.put("1", "");
+        assertTrue(myMap.containsKey("1")); // ключ содержится в первом узле
+
+        myMap.put("9", "");
+        assertTrue(myMap.containsKey("9")); // ключ содержится в связанном узле
+    }
 //
 //    @Test
 //    void size() {

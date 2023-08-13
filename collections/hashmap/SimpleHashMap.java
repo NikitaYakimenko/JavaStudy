@@ -6,11 +6,18 @@ public class SimpleHashMap <K, V> {
     private int capacity = 8;
     private Node<K, V>[] map = new Node[capacity];
 
+    /*
+    put() используется для добавления новых узлов и замены значений существующих узлов.
+    На основе хеша ключа вычисляется индекс:
+     - если на индексе пусто, добавляется новый узел;
+     - если на индексе есть узел с эквивалентным ключом, значение этого узла перезаписывается;
+     - если на индексе есть узел с отличным ключом, узел добавляется в список.
+     */
     public void put(K key, V value) { // принимаем на вход любые типы
-        int i = (map.length - 1) & key.hashCode(); // нормируем хеш-код в int для индекса
+        int i = getIndexByKey(key); // получаем индекс на основе ключа
         Node<K, V> newNode = new Node<>(key, value); // создаем новый узел с ключом и значением
 
-        if (checkOccupancy(i)) {
+        if (checkOccupancy()) {
             expand();
         }
 
@@ -31,41 +38,76 @@ public class SimpleHashMap <K, V> {
         } else { // если нашли узел с таким же ключом
             current.setValue(value); // перезаписываем значение узла
         }
-
-        System.out.println("PUT: hash: " + key.hashCode() + ", index: " + i);
-        System.out.println(Arrays.toString(map));
     }
 
-    public Node<?, ?> getNode(K key) {
-        int i = (map.length - 1) & key.hashCode();
-
-        return map[i];
-    }
-
-    public void getBucket(K key) {
-        int i = (map.length - 1) & key.hashCode();
-        Node<?, ?> node = map[i];
-        String result = map[i].toString();
-
-        while (node.getNextNode() != null) {
-            result += "; " + node.getNextNode().toString();
-            node = node.getNextNode();
-        }
-
-        System.out.println("GET: { " + result + " }\n");
-    }
-
+    /*
+    get() используется для получения значения узла на основе переданного ключа.
+    На основе хеша ключа вычисляется индекс:
+     - если на индексе пусто, возвращается null;
+     - если на индексе есть узел или список узлов, возвращается узел с эквивалентным ключом.
+     */
     public V get(K key) {
-        int index = (map.length - 1) & key.hashCode();
+        Node <K, V> target = (Node<K, V>) getFirstNodeInBucket(key); // присваиваем целевой узел
 
-        if (map[index] == null) {
+        if (target == null) { // если узла не существует
             return null;
         }
 
-        return map[index].getValue();
+        while (!target.getKey().equals(key)) { // пока ключ узла не совпадет
+            target = (Node<K, V>) target.getNextNode(); // переходим к следующему узлу
+        }
+
+        if (target.getKey().equals(key)) {
+            return target.getValue();
+        } else {
+            return null;
+        }
     }
 
-    public void delete(K key, V value) { // удаляем узел по ключу и значению
+    /*
+    getFirstNodeInBucket() возвращает первый узел, находящийся на индексе, независимо от переданного ключа.
+    Какой бы ключ не был передан, на его основе вычисляется индекс, к которому обращается метод и, получая доступ ко всему списку,
+    возвращает первый элемент этого списка. Кроме того, метод проверяет, содержится ли переданный ключ в любом из узлов связанных списков массива.
+     */
+    public Node<?, ?> getFirstNodeInBucket(K anyKeyInBucket) {
+        int i = getIndexByKey(anyKeyInBucket); // получаем индекс на основе ключа
+
+        if (containsKey(anyKeyInBucket)) {
+            return map[i];
+        } else {
+            return null;
+        }
+    }
+
+    /*
+    getBucket() возвращает список узлов, находящихся на индексе.
+    Реализация похожа на getFirstNodeInBucket(): отличие состоит в том, что метод возвращает весь список целиком.
+     */
+    public String getBucket(K key) {
+        int i = getIndexByKey(key); // получаем индекс на основе ключа
+        Node<?, ?> node;
+
+        if (map[i] != null) {
+            node = map[i];
+        } else {
+            return null;
+        }
+
+        String result = map[i].toString();
+
+        if (containsKey(key)) {
+            while (node.getNextNode() != null) {
+                result += "; " + node.getNextNode();
+                node = node.getNextNode();
+            }
+        } else {
+            result = "Key \"" + key + "\" doesn't exist";
+        }
+
+        return result;
+    }
+
+    public void remove(K key, V value) { // удаляем узел по ключу и значению
         for (int i = 0; i <= map.length - 1; i++) {
             if (map[i] != null) {
                 if (map[i].getKey().equals(key) & map[i].getValue().equals(value)) {
@@ -79,13 +121,25 @@ public class SimpleHashMap <K, V> {
         }
     }
 
+    /*
+    containsKey() проверяет существование переданного ключа в узлах связанных списков массива.
+    Метод возвращает истину, если любой из связанных списков массива содержит узел, ключ которого совпадает с переданным.
+     */
     public boolean containsKey(K key) {
         boolean containsKey = false;
 
         for (int i = 0; i <= map.length - 1; i++) {
-            if (map[i] != null) {
-                if (map[i].getKey().equals(key)) {
-                    containsKey = true;
+            Node<K, V> node = map[i];
+
+            if (map[i] != null) { // если индекс не пустой
+
+                while (node != null) { // пока узел существует
+                    if (node.getKey().equals(key)) { // если ключ совпадает
+                        containsKey = true;
+                        break;
+                    }
+
+                    node = (Node<K, V>) node.getNextNode(); // переходим к следующему узлу
                 }
             }
         }
@@ -109,7 +163,7 @@ public class SimpleHashMap <K, V> {
         return capacity;
     }
 
-    private boolean checkOccupancy(int i) { // проверяем не заполнен ли массив
+    private boolean checkOccupancy() { // проверяем не заполнен ли массив
         boolean needExpansion = true;
 
         for (Node<?, ?> node : map) {
@@ -125,5 +179,13 @@ public class SimpleHashMap <K, V> {
     private void expand() { // увеличиваем массив на четыре ячейки
         capacity += 2;
         map = Arrays.copyOf(map, capacity);
+    }
+
+    /*
+    getIndexByKey() вычисляет индекс на основе переданного ключа.
+    Метод применяет & к максимальному индексу массива и хешу ключа, гарантируя расположение индекса внутри диапазона массива.
+     */
+    private int getIndexByKey(K key) {
+        return (map.length - 1) & key.hashCode(); // нормируем хеш-код в int для индекса
     }
 }
