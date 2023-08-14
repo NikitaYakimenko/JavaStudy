@@ -38,6 +38,8 @@ public class SimpleHashMap <K, V> {
         } else { // если нашли узел с таким же ключом
             current.setValue(value); // перезаписываем значение узла
         }
+        System.out.println(i);
+        System.out.println(Arrays.toString(map));
     }
 
     /*
@@ -62,6 +64,46 @@ public class SimpleHashMap <K, V> {
         } else {
             return null;
         }
+    }
+
+    public void remove(K key, V value) { // удаляем узел по ключу и значению
+        for (int i = 0; i <= map.length - 1; i++) {
+            if (map[i] != null) {
+                if (map[i].getKey().equals(key) & map[i].getValue().equals(value)) {
+                    map[i] = null; // удаляем первый узел
+                } else if (map[i].getNextNode() != null) {
+                    if (map[i].getNextNode().getKey().equals(key) & map[i].getNextNode().getValue().equals(value)) {
+                        map[i].setNextNode(null); // или удаляем ссылку на следующий узел
+                    }
+                }
+            }
+        }
+    }
+
+    /*
+    containsKey() проверяет существование переданного ключа в узлах связанных списков массива.
+    Метод возвращает истину, если любой из связанных списков массива содержит узел, ключ которого совпадает с переданным.
+     */
+    public boolean containsKey(K key) {
+        boolean containsKey = false;
+
+        for (int i = 0; i <= map.length - 1; i++) {
+            Node<K, V> node = map[i];
+
+            if (map[i] != null) { // если индекс не пустой
+
+                while (node != null) { // пока узел существует
+                    if (node.getKey().equals(key)) { // если ключ совпадает
+                        containsKey = true;
+                        break;
+                    }
+
+                    node = (Node<K, V>) node.getNextNode(); // переходим к следующему узлу
+                }
+            }
+        }
+
+        return containsKey;
     }
 
     /*
@@ -106,48 +148,8 @@ public class SimpleHashMap <K, V> {
         return result;
     }
 
-    public void remove(K key, V value) { // удаляем узел по ключу и значению
-        for (int i = 0; i <= map.length - 1; i++) {
-            if (map[i] != null) {
-                if (map[i].getKey().equals(key) & map[i].getValue().equals(value)) {
-                    map[i] = null; // удаляем первый узел
-                } else if (map[i].getNextNode() != null) {
-                    if (map[i].getNextNode().getKey().equals(key) & map[i].getNextNode().getValue().equals(value)) {
-                        map[i].setNextNode(null); // или удаляем ссылку на следующий узел
-                    }
-                }
-            }
-        }
-    }
-
     /*
-    containsKey() проверяет существование переданного ключа в узлах связанных списков массива.
-    Метод возвращает истину, если любой из связанных списков массива содержит узел, ключ которого совпадает с переданным.
-     */
-    public boolean containsKey(K key) {
-        boolean containsKey = false;
-
-        for (int i = 0; i <= map.length - 1; i++) {
-            Node<K, V> node = map[i];
-
-            if (map[i] != null) { // если индекс не пустой
-
-                while (node != null) { // пока узел существует
-                    if (node.getKey().equals(key)) { // если ключ совпадает
-                        containsKey = true;
-                        break;
-                    }
-
-                    node = (Node<K, V>) node.getNextNode(); // переходим к следующему узлу
-                }
-            }
-        }
-
-        return containsKey;
-    }
-
-    /*
-    size() возвращает общее количество узлов во всех связанных списках массива
+    size() возвращает общее количество узлов во всех связанных списках массива.
      */
     public int size() {
         int count = 0;
@@ -172,6 +174,9 @@ public class SimpleHashMap <K, V> {
         return capacity;
     }
 
+    /*
+    needExpansion() проверяет необходимость расширения массива, основываясь на заполненности индексов массива.
+     */
     private boolean needExpansion() { // проверяем не заполнен ли массив
         boolean needExpansion = true;
 
@@ -185,7 +190,10 @@ public class SimpleHashMap <K, V> {
         return needExpansion;
     }
 
-    private void expand() { // увеличиваем массив на четыре ячейки
+    /*
+    expand() увеличивает массив на две ячейки
+     */
+    private void expand() {
         capacity += 2;
         map = Arrays.copyOf(map, capacity);
     }

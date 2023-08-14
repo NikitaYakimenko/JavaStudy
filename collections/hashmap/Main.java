@@ -2,6 +2,8 @@ package collections.hashmap;
 
 public class Main {
     public static void main(String[] args) {
-        SimpleHashMap<String, String> myMap = new SimpleHashMap<>();
+        SimpleHashMap<Integer, String> myMap = new SimpleHashMap<>();
+//        myMap.put(0, "");
+//        myMap.size();
     }
 }

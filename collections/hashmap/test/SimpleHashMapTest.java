@@ -103,12 +103,29 @@ class SimpleHashMapTest {
         assertEquals(3, myMap.size());
     }
 
-//    @Test
-//    void expand() {
-//        SimpleHashMap<String, String> myMap = new SimpleHashMap<>();
-//        myMap.put("number_one", "1");
-//        myMap.put("8", "");
-//
-//        assertEquals(8, myMap.getCapacity());
-//    }
+    @Test
+    void expand() {
+        SimpleHashMap<String, String> myMap = new SimpleHashMap<>();
+        int initialCapacity = myMap.getCapacity(); // начальная вместимость
+
+        for (int i = 0; i <= initialCapacity - 1; i++) { // заполняем первый уровень каждой ячейки узлами
+            myMap.put(Integer.toString(i), "");
+        }
+
+        assertEquals(initialCapacity, myMap.getCapacity()); // вместимость не увеличена
+
+        int expandedCapacity = initialCapacity + 2;
+
+        myMap.put("8", ""); // добавляем еще один узел
+        assertEquals(expandedCapacity, myMap.getCapacity()); // вместимость увеличена
+
+        for (int i = 8; i <= expandedCapacity - 1; i++) { // заполняем узлами до следующей необходимости в расширении вместимости
+            myMap.put(Integer.toString(i), "");
+        }
+
+        expandedCapacity += 2;
+
+        myMap.put("10", ""); // добавляем еще один узел
+        assertEquals(expandedCapacity, myMap.getCapacity()); // вместимость увеличена
+    }
 }
