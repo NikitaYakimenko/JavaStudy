@@ -17,7 +17,7 @@ public class SimpleHashMap <K, V> {
         int i = getIndexByKey(key); // получаем индекс на основе ключа
         Node<K, V> newNode = new Node<>(key, value); // создаем новый узел с ключом и значением
 
-        if (checkOccupancy()) {
+        if (needExpansion()) {
             expand();
         }
 
@@ -81,24 +81,23 @@ public class SimpleHashMap <K, V> {
 
     /*
     getBucket() возвращает список узлов, находящихся на индексе.
-    Реализация похожа на getFirstNodeInBucket(): отличие состоит в том, что метод возвращает весь список целиком.
+    Метод расширяет getFirstNodeInBucket(), возвращая весь список целиком.
      */
     public String getBucket(K key) {
-        int i = getIndexByKey(key); // получаем индекс на основе ключа
         Node<?, ?> node;
 
-        if (map[i] != null) {
-            node = map[i];
+        if (getFirstNodeInBucket(key) != null) { // если на индексе есть узел
+            node = getFirstNodeInBucket(key); // присваиваем в качестве целевого
         } else {
             return null;
         }
 
-        String result = map[i].toString();
+        String result = node.toString();
 
-        if (containsKey(key)) {
-            while (node.getNextNode() != null) {
-                result += "; " + node.getNextNode();
-                node = node.getNextNode();
+        if (containsKey(key)) { // если такой ключ содержится в списках массива
+            while (node.getNextNode() != null) { // пока есть ссылка на следующий узел
+                result += "; " + node.getNextNode(); // агрегируем строку для вывода
+                node = node.getNextNode(); // и переходим к следующему узлу
             }
         } else {
             result = "Key \"" + key + "\" doesn't exist";
@@ -147,12 +146,22 @@ public class SimpleHashMap <K, V> {
         return containsKey;
     }
 
+    /*
+    size() возвращает общее количество узлов во всех связанных списках массива
+     */
     public int size() {
         int count = 0;
 
-        for (Node<?, ?> node : map) {
-            if (node != null) {
-                count += 1;
+        for (Node<?, ?> bucket : map) {
+            if (bucket != null) {
+                Node<?, ?> node = bucket;
+
+                while (node.getNextNode() != null) {
+                    node = node.getNextNode();
+                    count++;
+                }
+
+                count++;
             }
         }
 
@@ -163,11 +172,11 @@ public class SimpleHashMap <K, V> {
         return capacity;
     }
 
-    private boolean checkOccupancy() { // проверяем не заполнен ли массив
+    private boolean needExpansion() { // проверяем не заполнен ли массив
         boolean needExpansion = true;
 
-        for (Node<?, ?> node : map) {
-            if (node == null) {
+        for (Node<?, ?> bucket : map) {
+            if (bucket == null) {
                 needExpansion = false;
                 break;
             }
@@ -186,6 +195,6 @@ public class SimpleHashMap <K, V> {
     Метод применяет & к максимальному индексу массива и хешу ключа, гарантируя расположение индекса внутри диапазона массива.
      */
     private int getIndexByKey(K key) {
-        return (map.length - 1) & key.hashCode(); // нормируем хеш-код в int для индекса
+        return (map.length - 1) & key.hashCode();
     }
 }
