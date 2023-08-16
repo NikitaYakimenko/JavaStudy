@@ -1,15 +1,19 @@
 package collections.hashmap.test;
 
 import collections.hashmap.SimpleHashMap;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class SimpleHashMapTest {
+    SimpleHashMap<String, String> myMap;
+    @BeforeEach
+    void prepareData() {
+        myMap = new SimpleHashMap<>();
+    }
     @Test
     void put() {
-        SimpleHashMap<String, String> myMap = new SimpleHashMap<>();
-
         myMap.put("1", "one"); // добавление нового узла
         assertEquals("one", myMap.get("1"));
 
@@ -22,8 +26,6 @@ class SimpleHashMapTest {
 
     @Test
     void get() {
-        SimpleHashMap<String, String> myMap = new SimpleHashMap<>();
-
         assertNull(myMap.get("1")); // пустой индекс
 
         myMap.put("1", "one");
@@ -49,8 +51,6 @@ class SimpleHashMapTest {
 
     @Test
     void containsKey() {
-        SimpleHashMap<String, String> myMap = new SimpleHashMap<>();
-
         assertFalse(myMap.containsKey("1")); // ключ не содержится ни в одном узле связанных списков массива
 
         myMap.put("1", "one");
@@ -62,8 +62,6 @@ class SimpleHashMapTest {
 
     @Test
     void getFirstNodeInBucket() {
-        SimpleHashMap<String, String> myMap = new SimpleHashMap<>();
-
         myMap.put("1", "one");
         assertEquals("1: one", myMap.getFirstNodeInBucket("1").toString()); // вызов по ключу первого узла
 
@@ -75,8 +73,6 @@ class SimpleHashMapTest {
 
     @Test
     void getBucket() {
-        SimpleHashMap<String, String> myMap = new SimpleHashMap<>();
-
         myMap.put("1", "one");
         assertEquals("1: one", myMap.getBucket("1")); // вызов по ключу первого узла
 
@@ -91,8 +87,6 @@ class SimpleHashMapTest {
 
     @Test
     void size() {
-        SimpleHashMap<String, String> myMap = new SimpleHashMap<>();
-
         myMap.put("1", "one"); // первый узел на индексе 1
         assertEquals(1, myMap.size());
 
@@ -105,7 +99,6 @@ class SimpleHashMapTest {
 
     @Test
     void expand() {
-        SimpleHashMap<String, String> myMap = new SimpleHashMap<>();
         int initialCapacity = myMap.getCapacity(); // начальная вместимость
 
         for (int i = 0; i <= initialCapacity - 1; i++) { // заполняем первый уровень каждой ячейки узлами
