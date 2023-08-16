@@ -8,10 +8,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SimpleHashMapTest {
     SimpleHashMap<String, String> myMap;
+
     @BeforeEach
     void prepareData() {
         myMap = new SimpleHashMap<>();
     }
+
     @Test
     void put() {
         myMap.put("1", "one"); // добавление нового узла

@@ -38,8 +38,8 @@ public class SimpleHashMap <K, V> {
         } else { // если нашли узел с таким же ключом
             current.setValue(value); // перезаписываем значение узла
         }
-        System.out.println(i);
-        System.out.println(Arrays.toString(map));
+//        System.out.println(i);
+//        System.out.println(Arrays.toString(map));
     }
 
     /*
@@ -146,6 +146,36 @@ public class SimpleHashMap <K, V> {
         }
 
         return result;
+    }
+
+    public String getBucket(int index) {
+        if (index >= map.length) {
+            return null;
+        }
+
+        if (map[index] == null) {
+            return null;
+        }
+
+        Node<?, ?> node = map[index];
+
+        String result = node.toString();
+
+        while (node.getNextNode() != null) {
+            result += "; " + node.getNextNode();
+            node = node.getNextNode();
+        }
+
+        return result;
+    }
+
+    /*
+    print() выводит все узлы, содержащиеся в связанных списках массива соответственно индексам
+     */
+    public void print() {
+        for (int i = 0; i < map.length; i++) {
+            System.out.println(i + " -> " + getBucket(i));
+        }
     }
 
     /*
