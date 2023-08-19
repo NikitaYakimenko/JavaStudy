@@ -38,8 +38,6 @@ public class SimpleHashMap <K, V> {
         } else { // если нашли узел с таким же ключом
             current.setValue(value); // перезаписываем значение узла
         }
-//        System.out.println(i);
-//        System.out.println(Arrays.toString(map));
     }
 
     /*
@@ -49,7 +47,7 @@ public class SimpleHashMap <K, V> {
      - если на индексе есть узел или список узлов, возвращается узел с эквивалентным ключом.
      */
     public V get(K key) {
-        Node <K, V> target = (Node<K, V>) getFirstNodeInBucket(key); // присваиваем целевой узел
+        Node <K, V> target = getFirstNodeInBucket(key); // присваиваем целевой узел
 
         if (target == null) { // если узла не существует
             return null;
@@ -66,15 +64,28 @@ public class SimpleHashMap <K, V> {
         }
     }
 
-    public void remove(K key, V value) { // удаляем узел по ключу и значению
-        for (int i = 0; i <= map.length - 1; i++) {
-            if (map[i] != null) {
-                if (map[i].getKey().equals(key) & map[i].getValue().equals(value)) {
-                    map[i] = null; // удаляем первый узел
-                } else if (map[i].getNextNode() != null) {
-                    if (map[i].getNextNode().getKey().equals(key) & map[i].getNextNode().getValue().equals(value)) {
-                        map[i].setNextNode(null); // или удаляем ссылку на следующий узел
-                    }
+    /*
+    remove() используется для удаления узлов по указанным ключам.
+    Метод выполняется только если переданный ключ содержится в списках массива.
+    На основе хеша ключа вычисляется индекс:
+     - если на индексе
+     */
+    public void remove(K key) { // удаляем узел по ключу
+        if (containsKey(key)) { // если ключ содержится в списках массива
+            int i = getIndexByKey(key); // получаем индекс по ключу
+            Node<K, V> target = getFirstNodeInBucket(key); // присваиваем целевой узел
+            Node<K, V> previousNode = null; // подготавливаем переменную для узла, предшествующего удаляемому
+
+            while (target != null && !target.getKey().equals(key)) { // ищем узел с заданным ключом
+                previousNode = target; // записываем предыдущий узел
+                target = (Node<K, V>) target.getNextNode(); // переходим к следующему узлу
+            }
+
+            if (target != null) { // если найден узел с заданным ключом
+                if (previousNode == null) { // если он первый в списке
+                    map[i] = (Node<K, V>) target.getNextNode(); // ставим на его место следующий узел или null
+                } else { // если он не первый в списке
+                    previousNode.setNextNode(target.getNextNode()); // ставим на его место следующий узел или null
                 }
             }
         }
@@ -111,7 +122,7 @@ public class SimpleHashMap <K, V> {
     Какой бы ключ не был передан, на его основе вычисляется индекс, к которому обращается метод и, получая доступ ко всему списку,
     возвращает первый элемент этого списка. Кроме того, метод проверяет, содержится ли переданный ключ в любом из узлов связанных списков массива.
      */
-    public Node<?, ?> getFirstNodeInBucket(K anyKeyInBucket) {
+    public Node<K, V> getFirstNodeInBucket(K anyKeyInBucket) {
         int i = getIndexByKey(anyKeyInBucket); // получаем индекс на основе ключа
 
         if (containsKey(anyKeyInBucket)) {
@@ -148,7 +159,10 @@ public class SimpleHashMap <K, V> {
         return result;
     }
 
-    public String getBucket(int index) {
+    /*
+    Внутренняя версия getBucket() работает аналогичным образом, но принимая на вход сразу индекс
+     */
+    private String getBucket(int index) {
         if (index >= map.length) {
             return null;
         }
@@ -176,6 +190,8 @@ public class SimpleHashMap <K, V> {
         for (int i = 0; i < map.length; i++) {
             System.out.println(i + " -> " + getBucket(i));
         }
+
+        System.out.println();
     }
 
     /*
@@ -208,16 +224,16 @@ public class SimpleHashMap <K, V> {
     needExpansion() проверяет необходимость расширения массива, основываясь на заполненности индексов массива.
      */
     private boolean needExpansion() { // проверяем не заполнен ли массив
-        boolean needExpansion = true;
+        boolean expansionNeeded = true;
 
         for (Node<?, ?> bucket : map) {
             if (bucket == null) {
-                needExpansion = false;
+                expansionNeeded = false;
                 break;
             }
         }
 
-        return needExpansion;
+        return expansionNeeded;
     }
 
     /*

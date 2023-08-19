@@ -42,14 +42,25 @@ class SimpleHashMapTest {
         assertNull(myMap.get("23")); // несуществующий ключ в непустом индексе
     }
 
-//    @Test
-//    void delete() {
-//        SimpleHashMap<Integer, String> myMap = new SimpleHashMap<>();
-//        myMap.put(1, "one");
-//        myMap.delete(1, "one");
-//
-//        assertNull(myMap.get(1));
-//    }
+    @Test
+    void remove() {
+        myMap.put("1", "one");
+
+        myMap.remove("1"); // первый и единственный узел на индексе
+        assertNull(myMap.get("1")); // на индексе пусто
+
+        myMap.put("1", "one");
+        myMap.put("9", "nine");
+        myMap.put("12", "twelve");
+        myMap.put("23", "twenty three");
+        // на индексе сформирован список узлов
+
+        myMap.remove("1"); // первый, но не единственный узел на индексе
+        assertEquals("9: nine; 12: twelve; 23: twenty three", myMap.getBucket("9")); // удален первый узел
+
+        myMap.remove("12"); // не первый узел на индексе
+        assertEquals("9: nine; 23: twenty three", myMap.getBucket("9")); // удален второй узел
+    }
 
     @Test
     void containsKey() {
