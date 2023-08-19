@@ -3,7 +3,7 @@ package collections.hashmap;
 public class Node <K, V> {
     private final K key;
     private V value;
-    private Node<?, ?> nextNode = null;
+    private Node<K, V> nextNode = null;
 
     public Node(K key, V value) {
         this.key = key;
@@ -22,11 +22,11 @@ public class Node <K, V> {
         this.value = value;
     }
 
-    public Node<?, ?> getNextNode() {
+    public Node<K, V> getNextNode() {
         return this.nextNode;
     }
 
-    public void setNextNode(Node<?, ?> nextNode) {
+    public void setNextNode(Node<K, V> nextNode) {
         this.nextNode = nextNode;
     }
 

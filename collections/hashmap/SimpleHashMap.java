@@ -26,7 +26,7 @@ public class SimpleHashMap <K, V> {
 
         while (current != null && !current.getKey().equals(key)) { // пока не найдем пустую ячейку или узел с таким же ключом
             previous = current; // обновляем предыдущий узел
-            current = (Node<K, V>) current.getNextNode(); // переходим к следующему узлу
+            current = current.getNextNode(); // переходим к следующему узлу
         }
 
         if (current == null) { // если ячейка пустая
@@ -54,7 +54,7 @@ public class SimpleHashMap <K, V> {
         }
 
         while (!target.getKey().equals(key)) { // пока ключ узла не совпадет
-            target = (Node<K, V>) target.getNextNode(); // переходим к следующему узлу
+            target = target.getNextNode(); // переходим к следующему узлу
         }
 
         if (target.getKey().equals(key)) {
@@ -78,12 +78,12 @@ public class SimpleHashMap <K, V> {
 
             while (target != null && !target.getKey().equals(key)) { // ищем узел с заданным ключом
                 previousNode = target; // записываем предыдущий узел
-                target = (Node<K, V>) target.getNextNode(); // переходим к следующему узлу
+                target = target.getNextNode(); // переходим к следующему узлу
             }
 
             if (target != null) { // если найден узел с заданным ключом
                 if (previousNode == null) { // если он первый в списке
-                    map[i] = (Node<K, V>) target.getNextNode(); // ставим на его место следующий узел или null
+                    map[i] = target.getNextNode(); // ставим на его место следующий узел или null
                 } else { // если он не первый в списке
                     previousNode.setNextNode(target.getNextNode()); // ставим на его место следующий узел или null
                 }
@@ -109,7 +109,7 @@ public class SimpleHashMap <K, V> {
                         break;
                     }
 
-                    node = (Node<K, V>) node.getNextNode(); // переходим к следующему узлу
+                    node = node.getNextNode(); // переходим к следующему узлу
                 }
             }
         }

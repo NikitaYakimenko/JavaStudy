@@ -26,7 +26,7 @@ class NodeTest {
 
     @Test
     void nextNode() {
-        Node<?, ?> newNode = new Node<>(2, "two");
+        Node<Integer, String> newNode = new Node<>(2, "two");
         node.setNextNode(newNode);
 
         assertEquals(newNode, node.getNextNode());

@@ -21,6 +21,7 @@ class SimpleHashMapTest {
 
         myMap.put("9", "nine"); // добавление узла в список
         assertEquals("nine", myMap.get("9"));
+        assertEquals("1: one; 9: nine", myMap.getBucket("1")); // узел добавлен в конец списка
 
         myMap.put("1", "newOne"); // замена значения существующего узла
         assertEquals("newOne", myMap.get("1"));
@@ -56,10 +57,10 @@ class SimpleHashMapTest {
         // на индексе сформирован список узлов
 
         myMap.remove("1"); // первый, но не единственный узел на индексе
-        assertEquals("9: nine; 12: twelve; 23: twenty three", myMap.getBucket("9")); // удален первый узел
+        assertEquals("9: nine; 12: twelve; 23: twenty three", myMap.getBucket("9")); // удален первый узел, остальные узлы сохранены
 
         myMap.remove("12"); // не первый узел на индексе
-        assertEquals("9: nine; 23: twenty three", myMap.getBucket("9")); // удален второй узел
+        assertEquals("9: nine; 23: twenty three", myMap.getBucket("9")); // удален второй узел, остальные узлы сохранены
     }
 
     @Test
