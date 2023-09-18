@@ -238,10 +238,10 @@ public class SimpleHashMap <K, V> {
     }
 
     /*
-    expand() увеличивает массив на две ячейки
+    expand() увеличивает массив на ~30%
      */
     private void expand() {
-        capacity += 2;
+        capacity += capacity / 3;
         map = Arrays.copyOf(map, capacity);
     }
 

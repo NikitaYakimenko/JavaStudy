@@ -119,20 +119,18 @@ class SimpleHashMapTest {
             myMap.put(Integer.toString(i), "");
         }
 
-        assertEquals(initialCapacity, myMap.getCapacity()); // вместимость не увеличена
-
-        int expandedCapacity = initialCapacity + 2;
+        assertEquals(myMap.getCapacity(), initialCapacity); // вместимость не увеличена
 
         myMap.put("8", ""); // добавляем еще один узел
-        assertEquals(expandedCapacity, myMap.getCapacity()); // вместимость увеличена
+        assertTrue(myMap.getCapacity() > initialCapacity); // вместимость увеличена
 
-        for (int i = 8; i <= expandedCapacity - 1; i++) { // заполняем узлами до следующей необходимости в расширении вместимости
+        initialCapacity = myMap.getCapacity();
+
+        for (int i = 8; i <= initialCapacity - 1; i++) { // заполняем узлами до следующей необходимости в расширении вместимости
             myMap.put(Integer.toString(i), "");
         }
 
-        expandedCapacity += 2;
-
         myMap.put("10", ""); // добавляем еще один узел
-        assertEquals(expandedCapacity, myMap.getCapacity()); // вместимость увеличена
+        assertTrue(myMap.getCapacity() > initialCapacity); // вместимость увеличена
     }
 }
