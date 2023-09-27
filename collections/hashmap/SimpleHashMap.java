@@ -12,7 +12,7 @@ public class SimpleHashMap <K, V> {
      */
     public SimpleHashMap(){
         map = new Node[capacity];
-    };
+    }
 
     /*
     конструктор для случаев хранения больших объемов данных
@@ -47,11 +47,10 @@ public class SimpleHashMap <K, V> {
         if (current == null) { // если ячейка пустая
             if (previous == null) { // если это первый узел
                 map[index] = newNode; // добавляем его в ячейку
-                size++;
             } else { // если это не первый узел
                 previous.setNextNode(newNode); // добавляем его после предыдущего узла
-                size++;
             }
+            size++;
         } else { // если нашли узел с таким же ключом
             current.setValue(value); // перезаписываем значение узла
         }
@@ -103,11 +102,10 @@ public class SimpleHashMap <K, V> {
             if (target != null) { // если найден узел с заданным ключом
                 if (previousNode == null) { // если он первый в списке
                     map[index] = target.getNextNode(); // ставим на его место следующий узел или null
-                    size--;
                 } else { // если он не первый в списке
                     previousNode.setNextNode(target.getNextNode()); // присваиваем ссылке предыдущего узла ссылку на следующий узел или null
-                    size--;
                 }
+                size--;
             }
         }
     }

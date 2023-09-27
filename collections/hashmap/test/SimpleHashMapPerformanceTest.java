@@ -102,7 +102,6 @@ public class SimpleHashMapPerformanceTest {
         }
         start = System.currentTimeMillis();
         for (int i = 0; i < 10_000; i++) {
-//            System.out.println(i);
             myMap.containsKey(i);
         }
         System.out.println("containsKey(): SimpleHashMap took " + (System.currentTimeMillis() - start) + " ms");
