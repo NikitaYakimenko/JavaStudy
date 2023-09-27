@@ -3,8 +3,22 @@ package collections.hashmap;
 import java.util.Arrays;
 
 public class SimpleHashMap <K, V> {
-    private int capacity = 8;
-    private Node<K, V>[] map = new Node[capacity];
+    private int capacity = 8; // дефолтная вместимость
+    private Node<K, V>[] map;
+
+    /*
+    Дефолтный конструктор
+     */
+    public SimpleHashMap(){
+        map = new Node[capacity];
+    };
+
+    /*
+    конструктор для случаев хранения больших объемов данных
+     */
+    public SimpleHashMap(int capacity) {
+         map = new Node[capacity];
+    }
 
     /*
     put() используется для добавления новых узлов и замены значений существующих узлов.
