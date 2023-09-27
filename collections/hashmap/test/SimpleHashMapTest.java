@@ -109,6 +109,9 @@ class SimpleHashMapTest {
 
         myMap.put("2", "two"); // первый узел на индексе 2
         assertEquals(3, myMap.size());
+
+        myMap.remove("1"); // удаляем один из узлов
+        assertEquals(2, myMap.size());
     }
 
     @Test

@@ -93,22 +93,23 @@ public class SimpleHashMapPerformanceTest {
 
     @Test
     void size() {
-        for (int i = 0; i < 1_000; i++) {
+        for (int i = 0; i < 1_000_000; i++) {
             map.put(i, i);
         }
 
         long start = System.currentTimeMillis();
-        for (int i = 0; i < 100_000; i++) {
+        for (int i = 0; i < 1_000_000; i++) {
             map.size();
         }
         System.out.println("size(): HashMap took " + (System.currentTimeMillis() - start) + " ms");
 
-        for (int i = 0; i < 1_000; i++) {
+        myMap = new SimpleHashMap<>(1_000_000);
+        for (int i = 0; i < 1_000_000; i++) {
             myMap.put(i, i);
         }
 
         start = System.currentTimeMillis();
-        for (int i = 0; i < 100_000; i++) {
+        for (int i = 0; i < 1_000_000; i++) {
             myMap.size();
         }
         System.out.println("size(): SimpleHashMap took " + (System.currentTimeMillis() - start) + " ms");

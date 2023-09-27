@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 public class SimpleHashMap <K, V> {
     private int capacity = 8; // дефолтная вместимость
+    private int size = 0;
     private Node<K, V>[] map;
 
     /*
@@ -46,8 +47,10 @@ public class SimpleHashMap <K, V> {
         if (current == null) { // если ячейка пустая
             if (previous == null) { // если это первый узел
                 map[i] = newNode; // добавляем его в ячейку
+                size++;
             } else { // если это не первый узел
                 previous.setNextNode(newNode); // добавляем его после предыдущего узла
+                size++;
             }
         } else { // если нашли узел с таким же ключом
             current.setValue(value); // перезаписываем значение узла
@@ -99,8 +102,10 @@ public class SimpleHashMap <K, V> {
                 if (previousNode == null) { // если он первый в списке
                     int i = getIndexByKey(key); // получаем индекс по ключу
                     map[i] = target.getNextNode(); // ставим на этот индекс следующий узел или null
+                    size--;
                 } else { // если он не первый в списке
                     previousNode.setNextNode(target.getNextNode()); // ставим на его место следующий узел или null
+                    size--;
                 }
             }
         }
@@ -213,22 +218,7 @@ public class SimpleHashMap <K, V> {
     size() возвращает общее количество узлов во всех связанных списках массива.
      */
     public int size() {
-        int count = 0;
-
-        for (Node<?, ?> bucket : map) {
-            if (bucket != null) {
-                Node<?, ?> node = bucket;
-
-                while (node.getNextNode() != null) {
-                    node = node.getNextNode();
-                    count++;
-                }
-
-                count++;
-            }
-        }
-
-        return count;
+        return size;
     }
 
     public int getCapacity() {
