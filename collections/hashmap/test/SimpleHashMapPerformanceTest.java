@@ -19,14 +19,15 @@ public class SimpleHashMapPerformanceTest {
 
     @Test
     void put() {
-        myMap = new SimpleHashMap<>(1_000_000);
-
+        // HashMap
         long start = System.currentTimeMillis();
         for (int i = 0; i < 1_000_000; i++) {
             map.put(i, i);
         }
         System.out.println("put(): HashMap took " + (System.currentTimeMillis() - start) + " ms");
 
+        // SimpleHashMap
+        myMap = new SimpleHashMap<>(1_000_000);
         start = System.currentTimeMillis();
         for (int i = 0; i < 1_000_000; i++) {
             myMap.put(i, i);
@@ -36,6 +37,7 @@ public class SimpleHashMapPerformanceTest {
 
     @Test
     void get() {
+        // HashMap
         map.put(1, 1);
         long start = System.currentTimeMillis();
         for (int i = 0; i < 1_000_000; i++) {
@@ -43,6 +45,7 @@ public class SimpleHashMapPerformanceTest {
         }
         System.out.println("get(): HashMap took " + (System.currentTimeMillis() - start) + " ms");
 
+        // SimpleHashMap
         myMap.put(1, 1);
         start = System.currentTimeMillis();
         for (int i = 0; i < 1_000_000; i++) {
@@ -53,6 +56,7 @@ public class SimpleHashMapPerformanceTest {
 
     @Test
     void remove() {
+        // HashMap
         for (int i = 0; i < 10_000; i++) {
             map.put(i, i);
         }
@@ -63,6 +67,7 @@ public class SimpleHashMapPerformanceTest {
         }
         System.out.println("remove(): HashMap took " + (System.currentTimeMillis() - start) + " ms");
 
+        // SimpleHashMap
         for (int i = 0; i < 10_000; i++) {
             myMap.put(i, i);
         }
@@ -76,6 +81,7 @@ public class SimpleHashMapPerformanceTest {
 
     @Test
     void containsKey() {
+        // HashMap
         map.put(1, 1);
         long start = System.currentTimeMillis();
         for (int i = 0; i < 1_000_000; i++) {
@@ -83,6 +89,7 @@ public class SimpleHashMapPerformanceTest {
         }
         System.out.println("containsKey(): HashMap took " + (System.currentTimeMillis() - start) + " ms");
 
+        // SimpleHashMap
         myMap.put(1, 1);
         start = System.currentTimeMillis();
         for (int i = 0; i < 1_000_000; i++) {
@@ -93,6 +100,7 @@ public class SimpleHashMapPerformanceTest {
 
     @Test
     void size() {
+        // HashMap
         for (int i = 0; i < 1_000_000; i++) {
             map.put(i, i);
         }
@@ -103,6 +111,7 @@ public class SimpleHashMapPerformanceTest {
         }
         System.out.println("size(): HashMap took " + (System.currentTimeMillis() - start) + " ms");
 
+        // SimpleHashMap
         myMap = new SimpleHashMap<>(1_000_000);
         for (int i = 0; i < 1_000_000; i++) {
             myMap.put(i, i);
