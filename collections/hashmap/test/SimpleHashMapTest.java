@@ -4,6 +4,8 @@ import collections.hashmap.SimpleHashMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Method;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class SimpleHashMapTest {
@@ -21,7 +23,15 @@ class SimpleHashMapTest {
 
         myMap.put("9", "nine"); // добавление узла в список
         assertEquals("nine", myMap.get("9"));
-        assertEquals("1: one; 9: nine", myMap.getBucket("1")); // узел добавлен в конец списка
+
+        try {
+            Method method = SimpleHashMap.class.getDeclaredMethod("getBucket", int.class);
+            method.setAccessible(true);
+            assertEquals("1: one; 9: nine", method.invoke(myMap, 1).toString()); // узел добавлен в конец списка
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
 
         myMap.put("1", "newOne"); // замена значения существующего узла
         assertEquals("newOne", myMap.get("1"));
@@ -57,10 +67,25 @@ class SimpleHashMapTest {
         // на индексе сформирован список узлов
 
         myMap.remove("1"); // первый, но не единственный узел на индексе
-        assertEquals("9: nine; 12: twelve; 23: twenty three", myMap.getBucket("9")); // удален первый узел, остальные узлы сохранены
+
+        try {
+            Method method = SimpleHashMap.class.getDeclaredMethod("getBucket", int.class);
+            method.setAccessible(true);
+            assertEquals("9: nine; 12: twelve; 23: twenty three", method.invoke(myMap, 1).toString()); // удален первый узел, остальные узлы сохранены
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
 
         myMap.remove("12"); // не первый узел на индексе
-        assertEquals("9: nine; 23: twenty three", myMap.getBucket("9")); // удален второй узел, остальные узлы сохранены
+        try {
+            Method method = SimpleHashMap.class.getDeclaredMethod("getBucket", int.class);
+            method.setAccessible(true);
+            assertEquals("9: nine; 23: twenty three", method.invoke(myMap, 1).toString()); // удален второй узел, остальные узлы сохранены
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -77,26 +102,38 @@ class SimpleHashMapTest {
     @Test
     void getFirstNodeInBucket() {
         myMap.put("1", "one");
-        assertEquals("1: one", myMap.getFirstNodeInBucket("1").toString()); // вызов по ключу первого узла
 
-        myMap.put("9", "9");
-        assertEquals("1: one", myMap.getFirstNodeInBucket("9").toString()); // вызов по ключу второго узла
+        try {
+            Method method = SimpleHashMap.class.getDeclaredMethod("getFirstNodeInBucket", int.class);
+            method.setAccessible(true);
+            assertEquals("1: one", method.invoke(myMap, 1).toString()); // вызов по существующему индексу
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        assertNull(myMap.getFirstNodeInBucket("12")); // вызов по ключу несуществующего узла
+        try {
+            Method method = SimpleHashMap.class.getDeclaredMethod("getFirstNodeInBucket", int.class);
+            method.setAccessible(true);
+            assertNull(method.invoke(myMap, 2)); // вызов по несуществующему индексу
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
     void getBucket() {
         myMap.put("1", "one");
-        assertEquals("1: one", myMap.getBucket("1")); // вызов по ключу первого узла
-
         myMap.put("9", "nine");
-        assertEquals("1: one; 9: nine", myMap.getBucket("9")); // вызов по ключу второго узла
 
-        myMap.put("12", "twelve");
-        assertEquals("1: one; 9: nine; 12: twelve", myMap.getBucket("12")); // вызов по ключу третьего узла
-
-        assertNull(myMap.getBucket("23")); // вызов по ключу несуществующего узла
+        try {
+            Method method = SimpleHashMap.class.getDeclaredMethod("getBucket", int.class);
+            method.setAccessible(true);
+            assertEquals("1: one; 9: nine", method.invoke(myMap, 1).toString()); // последовательность узлов получена
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Test

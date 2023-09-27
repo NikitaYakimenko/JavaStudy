@@ -64,17 +64,18 @@ public class SimpleHashMap <K, V> {
      - если на индексе есть узел или список узлов, возвращается узел с эквивалентным ключом.
      */
     public V get(K key) {
-        Node <K, V> target = getFirstNodeInBucket(key); // присваиваем целевой узел
+        int i = getIndexByKey(key); // получаем индекс на основе ключа
+        Node <K, V> target = getFirstNodeInBucket(i); // присваиваем целевой узел
 
         if (target == null) { // если узла не существует
             return null;
         }
 
-        while (!target.getKey().equals(key)) { // пока ключ узла не совпадет
+        while (target != null && !target.getKey().equals(key)) { // пока ключ узла не совпадет
             target = target.getNextNode(); // переходим к следующему узлу
         }
 
-        if (target.getKey().equals(key)) {
+        if (target != null && target.getKey().equals(key)) {
             return target.getValue();
         } else {
             return null;
@@ -90,7 +91,8 @@ public class SimpleHashMap <K, V> {
      */
     public void remove(K key) { // удаляем узел по ключу
         if (containsKey(key)) { // если ключ содержится в списках массива
-            Node<K, V> target = getFirstNodeInBucket(key); // присваиваем целевой узел
+            int index = getIndexByKey(key); // получаем индекс на основе ключа
+            Node<K, V> target = getFirstNodeInBucket(index); // присваиваем целевой узел
             Node<K, V> previousNode = null; // подготавливаем переменную для узла, предшествующего удаляемому
 
             while (target != null && !target.getKey().equals(key)) { // ищем узел с заданным ключом
@@ -142,45 +144,20 @@ public class SimpleHashMap <K, V> {
     Какой бы ключ не был передан, на его основе вычисляется индекс, к которому обращается метод и, получая доступ ко всему списку,
     возвращает первый элемент этого списка. Кроме того, метод проверяет, содержится ли переданный ключ в любом из узлов связанных списков массива.
      */
-    public Node<K, V> getFirstNodeInBucket(K anyKeyInBucket) {
-        int i = getIndexByKey(anyKeyInBucket); // получаем индекс на основе ключа
-
-        if (containsKey(anyKeyInBucket)) {
-            return map[i];
-        } else {
+    private Node<K, V> getFirstNodeInBucket(int index) {
+        if (index >= map.length) {
             return null;
         }
+
+        if (map[index] == null) {
+            return null;
+        }
+
+        return map[index];
     }
 
     /*
     getBucket() возвращает список узлов, находящихся на индексе.
-    Метод расширяет getFirstNodeInBucket(), возвращая весь список целиком.
-     */
-    public String getBucket(K key) {
-        Node<?, ?> node;
-
-        if (getFirstNodeInBucket(key) != null) { // если на индексе есть узел
-            node = getFirstNodeInBucket(key); // присваиваем в качестве целевого
-        } else {
-            return null;
-        }
-
-        String result = node.toString();
-
-        if (containsKey(key)) { // если такой ключ содержится в списках массива
-            while (node.getNextNode() != null) { // пока есть ссылка на следующий узел
-                result += "; " + node.getNextNode(); // агрегируем строку для вывода
-                node = node.getNextNode(); // и переходим к следующему узлу
-            }
-        } else {
-            result = "Key \"" + key + "\" doesn't exist";
-        }
-
-        return result;
-    }
-
-    /*
-    Внутренняя версия getBucket() работает аналогичным образом, но принимая на вход сразу индекс
      */
     private String getBucket(int index) {
         if (index >= map.length) {
