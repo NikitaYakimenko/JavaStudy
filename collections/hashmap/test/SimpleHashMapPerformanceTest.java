@@ -95,6 +95,7 @@ public class SimpleHashMapPerformanceTest {
 
         long start = System.currentTimeMillis();
         for (int i = 0; i < 10_000; i++) {
+            //noinspection ResultOfMethodCallIgnored
             map.containsKey(i);
         }
         System.out.println("containsKey(): HashMap took " + (System.currentTimeMillis() - start) + " ms");
@@ -120,6 +121,7 @@ public class SimpleHashMapPerformanceTest {
 
         long start = System.currentTimeMillis();
         for (int i = 0; i < 1_000_000; i++) {
+            //noinspection ResultOfMethodCallIgnored
             map.size();
         }
         System.out.println("size(): HashMap took " + (System.currentTimeMillis() - start) + " ms");

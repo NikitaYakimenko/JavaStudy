@@ -30,6 +30,7 @@ class SimpleHashMapTest {
             assertEquals("1: one; 9: nine", method.invoke(myMap, 1).toString()); // второй узел добавлен в конец списка
         }
         catch (Exception e) {
+            //noinspection CallToPrintStackTrace
             e.printStackTrace();
         }
 
@@ -74,6 +75,7 @@ class SimpleHashMapTest {
             assertEquals("9: nine; 12: twelve; 23: twenty three", method.invoke(myMap, 1).toString()); // удален первый узел, остальные узлы сохранены
         }
         catch (Exception e) {
+            //noinspection CallToPrintStackTrace
             e.printStackTrace();
         }
 
@@ -84,8 +86,12 @@ class SimpleHashMapTest {
             assertEquals("9: nine; 23: twenty three", method.invoke(myMap, 1).toString()); // удален второй узел, остальные узлы сохранены
         }
         catch (Exception e) {
+            //noinspection CallToPrintStackTrace
             e.printStackTrace();
         }
+
+        myMap.remove("2"); // удаление несуществующего ключа не производит никаких действий
+        assertNull(myMap.get("2"));
     }
 
     @Test
@@ -110,6 +116,7 @@ class SimpleHashMapTest {
             assertEquals("1: one", method.invoke(myMap, 1).toString()); // вызов по существующему индексу
         }
         catch (Exception e) {
+            //noinspection CallToPrintStackTrace
             e.printStackTrace();
         }
 
@@ -119,6 +126,7 @@ class SimpleHashMapTest {
             assertNull(method.invoke(myMap, 2)); // вызов по несуществующему индексу
         }
         catch (Exception e) {
+            //noinspection CallToPrintStackTrace
             e.printStackTrace();
         }
     }
@@ -133,6 +141,7 @@ class SimpleHashMapTest {
             method.setAccessible(true);
             assertEquals("1: one; 9: nine", method.invoke(myMap, 1).toString()); // последовательность узлов получена
         } catch (Exception e) {
+            //noinspection CallToPrintStackTrace
             e.printStackTrace();
         }
     }
