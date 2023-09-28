@@ -158,6 +158,7 @@ public class SimpleHashMap <K, V> {
         return capacity;
     }
 
+    // приватные методы
     /*
     needExpansion() проверяет необходимость расширения массива, основываясь на заполненности индексов массива.
      */
@@ -196,14 +197,6 @@ public class SimpleHashMap <K, V> {
    возвращает первый элемент этого списка. Кроме того, метод проверяет, содержится ли переданный ключ в любом из узлов связанных списков массива.
     */
     private Node<K, V> getFirstNodeInBucket(int index) {
-        if (index >= map.length) {
-            return null;
-        }
-
-        if (map[index] == null) {
-            return null;
-        }
-
         return map[index];
     }
 
@@ -211,23 +204,19 @@ public class SimpleHashMap <K, V> {
     getBucket() возвращает список узлов, находящихся на индексе.
      */
     private String getBucket(int index) {
-        if (index >= map.length) {
+        Node<?, ?> node = getFirstNodeInBucket(index);
+
+        if (node != null) {
+            String result = node.toString();
+
+            while (node.getNextNode() != null) {
+                result += "; " + node.getNextNode();
+                node = node.getNextNode();
+            }
+
+            return result;
+        } else {
             return null;
         }
-
-        if (map[index] == null) {
-            return null;
-        }
-
-        Node<?, ?> node = map[index];
-
-        String result = node.toString();
-
-        while (node.getNextNode() != null) {
-            result += "; " + node.getNextNode();
-            node = node.getNextNode();
-        }
-
-        return result;
     }
 }

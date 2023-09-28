@@ -27,7 +27,7 @@ class SimpleHashMapTest {
         try {
             Method method = SimpleHashMap.class.getDeclaredMethod("getBucket", int.class);
             method.setAccessible(true);
-            assertEquals("1: one; 9: nine", method.invoke(myMap, 1).toString()); // узел добавлен в конец списка
+            assertEquals("1: one; 9: nine", method.invoke(myMap, 1).toString()); // второй узел добавлен в конец списка
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -102,6 +102,7 @@ class SimpleHashMapTest {
     @Test
     void getFirstNodeInBucket() {
         myMap.put("1", "one");
+        myMap.put("9", "nine");
 
         try {
             Method method = SimpleHashMap.class.getDeclaredMethod("getFirstNodeInBucket", int.class);

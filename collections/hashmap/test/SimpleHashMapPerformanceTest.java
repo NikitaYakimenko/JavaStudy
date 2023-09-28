@@ -41,6 +41,7 @@ public class SimpleHashMapPerformanceTest {
         for (int i = 0; i < 1_000_000; i++) {
             map.put(i, i);
         }
+
         long start = System.currentTimeMillis();
         for (int i = 0; i < 1_000_000; i++) {
             map.get(i);
@@ -52,6 +53,7 @@ public class SimpleHashMapPerformanceTest {
         for (int i = 0; i < 1_000_000; i++) {
             myMap.put(i, i);
         }
+        
         start = System.currentTimeMillis();
         for (int i = 0; i < 1_000_000; i++) {
             myMap.get(i);
@@ -90,6 +92,7 @@ public class SimpleHashMapPerformanceTest {
         for (int i = 0; i < 10_000; i++) {
             map.put(i, i);
         }
+
         long start = System.currentTimeMillis();
         for (int i = 0; i < 10_000; i++) {
             map.containsKey(i);
@@ -100,6 +103,7 @@ public class SimpleHashMapPerformanceTest {
         for (int i = 0; i < 10_000; i++) {
             myMap.put(i, i);
         }
+
         start = System.currentTimeMillis();
         for (int i = 0; i < 10_000; i++) {
             myMap.containsKey(i);
