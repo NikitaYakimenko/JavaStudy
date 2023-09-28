@@ -1,5 +1,6 @@
 package collections.hashmap;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class SimpleHashMap <K, V> {
@@ -29,14 +30,14 @@ public class SimpleHashMap <K, V> {
      - если на индексе есть узел с отличным ключом, узел добавляется в список.
      */
     public void put(K key, V value) { // принимаем на вход любые типы
-        int index = getIndexByKey(key); // получаем индекс на основе ключа
+        int i = getIndexByKey(key); // получаем индекс на основе ключа
         Node<K, V> newNode = new Node<>(key, value); // создаем новый узел с ключом и значением
 
         if (needExpansion()) {
             expand();
         }
 
-        Node<K, V> current = map[index]; // текущий узел
+        Node<K, V> current = map[i]; // текущий узел
         Node<K, V> previous = null; // предыдущий узел
 
         while (current != null && !current.getKey().equals(key)) { // пока не найдем пустую ячейку или узел с таким же ключом
@@ -46,7 +47,7 @@ public class SimpleHashMap <K, V> {
 
         if (current == null) { // если ячейка пустая
             if (previous == null) { // если это первый узел
-                map[index] = newNode; // добавляем его в ячейку
+                map[i] = newNode; // добавляем его в ячейку
             } else { // если это не первый узел
                 previous.setNextNode(newNode); // добавляем его после предыдущего узла
             }
@@ -63,8 +64,8 @@ public class SimpleHashMap <K, V> {
      - если на индексе есть узел или список узлов, возвращается узел с эквивалентным ключом.
      */
     public V get(K key) {
-        int index = getIndexByKey(key); // получаем индекс на основе ключа
-        Node <K, V> target = getFirstNodeInBucket(index); // присваиваем целевой узел
+        int i = getIndexByKey(key); // получаем индекс на основе ключа
+        Node <K, V> target = getFirstNodeInBucket(i); // присваиваем целевой узел
 
         if (target == null) { // если узла не существует
             return null;
@@ -90,8 +91,8 @@ public class SimpleHashMap <K, V> {
      */
     public void remove(K key) { // удаляем узел по ключу
         if (containsKey(key)) { // если ключ содержится в списках массива
-            int index = getIndexByKey(key); // получаем индекс на основе ключа
-            Node<K, V> target = getFirstNodeInBucket(index); // присваиваем целевой узел
+            int i = getIndexByKey(key); // получаем индекс на основе ключа
+            Node<K, V> target = getFirstNodeInBucket(i); // присваиваем целевой узел
             Node<K, V> previousNode = null; // подготавливаем переменную для узла, предшествующего удаляемому
 
             while (target != null && !target.getKey().equals(key)) { // ищем узел с заданным ключом
@@ -101,7 +102,7 @@ public class SimpleHashMap <K, V> {
 
             if (target != null) { // если найден узел с заданным ключом
                 if (previousNode == null) { // если он первый в списке
-                    map[index] = target.getNextNode(); // ставим на его место следующий узел или null
+                    map[i] = target.getNextNode(); // ставим на его место следующий узел или null
                 } else { // если он не первый в списке
                     previousNode.setNextNode(target.getNextNode()); // присваиваем ссылке предыдущего узла ссылку на следующий узел или null
                 }
@@ -196,15 +197,15 @@ public class SimpleHashMap <K, V> {
    Какой бы ключ не был передан, на его основе вычисляется индекс, к которому обращается метод и, получая доступ ко всему списку,
    возвращает первый элемент этого списка. Кроме того, метод проверяет, содержится ли переданный ключ в любом из узлов связанных списков массива.
     */
-    private Node<K, V> getFirstNodeInBucket(int index) {
-        return map[index];
+    private Node<K, V> getFirstNodeInBucket(int i) {
+        return map[i];
     }
 
     /*
     getBucket() возвращает список узлов, находящихся на индексе.
      */
-    private String getBucket(int index) {
-        Node<?, ?> node = getFirstNodeInBucket(index);
+    private String getBucket(int i) {
+        Node<?, ?> node = getFirstNodeInBucket(i);
 
         if (node != null) {
             String result = node.toString();
