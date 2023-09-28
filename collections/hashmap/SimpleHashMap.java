@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class SimpleHashMap <K, V> {
-    private int capacity = 8; // дефолтная вместимость
+    private int capacity = 8; // Дефолтная вместимость
     private int size = 0;
     private Node<K, V>[] map;
 
@@ -16,10 +16,11 @@ public class SimpleHashMap <K, V> {
     }
 
     /*
-    конструктор для случаев хранения больших объемов данных
+    Конструктор для случаев хранения больших объемов данных
      */
     public SimpleHashMap(int capacity) {
-         map = new Node[capacity];
+        this.capacity = capacity;
+        map = new Node[this.capacity];
     }
 
     /*
