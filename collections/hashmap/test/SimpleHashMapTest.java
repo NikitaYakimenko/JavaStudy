@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,10 +26,14 @@ class SimpleHashMapTest {
         myMap.put("9", "nine"); // добавление узла в список
         assertEquals("nine", myMap.get("9"));
 
+        ArrayList<Node<String, String>> expected = new ArrayList<>(); // заготовка для проверки
+        expected.add(new Node<>("1", "one"));
+        expected.add(new Node<>("9", "nine"));
+
         try {
             Method method = SimpleHashMap.class.getDeclaredMethod("getBucket", int.class);
             method.setAccessible(true);
-            assertEquals("1: one; 9: nine", method.invoke(myMap, 1).toString()); // второй узел добавлен в конец списка
+            assertEquals(expected.toString(), method.invoke(myMap, 1).toString()); // второй узел добавлен в конец списка
         }
         catch (Exception e) {
             //noinspection CallToPrintStackTrace
@@ -70,10 +75,15 @@ class SimpleHashMapTest {
 
         myMap.remove("1"); // первый, но не единственный узел на индексе
 
+        ArrayList<Node<String, String>> expected = new ArrayList<>(); // заготовка для проверки
+        expected.add(new Node<>("9", "nine"));
+        expected.add(new Node<>("12", "twelve"));
+        expected.add(new Node<>("23", "twenty three"));
+
         try {
             Method method = SimpleHashMap.class.getDeclaredMethod("getBucket", int.class);
             method.setAccessible(true);
-            assertEquals("9: nine; 12: twelve; 23: twenty three", method.invoke(myMap, 1).toString()); // удален первый узел, остальные узлы сохранены
+            assertEquals(expected.toString(), method.invoke(myMap, 1).toString()); // удален первый узел, остальные узлы сохранены
         }
         catch (Exception e) {
             //noinspection CallToPrintStackTrace
@@ -81,10 +91,11 @@ class SimpleHashMapTest {
         }
 
         myMap.remove("12"); // не первый узел на индексе
+        expected.remove(1);
         try {
             Method method = SimpleHashMap.class.getDeclaredMethod("getBucket", int.class);
             method.setAccessible(true);
-            assertEquals("9: nine; 23: twenty three", method.invoke(myMap, 1).toString()); // удален второй узел, остальные узлы сохранены
+            assertEquals(expected.toString(), method.invoke(myMap, 1).toString()); // удален второй узел, остальные узлы сохранены
         }
         catch (Exception e) {
             //noinspection CallToPrintStackTrace
@@ -137,10 +148,14 @@ class SimpleHashMapTest {
         myMap.put("1", "one");
         myMap.put("9", "nine");
 
+        ArrayList<Node<String, String>> expected = new ArrayList<>(); // заготовка для проверки
+        expected.add(new Node<>("1", "one"));
+        expected.add(new Node<>("9", "nine"));
+
         try {
             Method method = SimpleHashMap.class.getDeclaredMethod("getBucket", int.class);
             method.setAccessible(true);
-            assertEquals("1: one; 9: nine", method.invoke(myMap, 1).toString()); // последовательность узлов получена
+            assertEquals(expected.toString(), method.invoke(myMap, 1).toString()); // последовательность узлов получена
         } catch (Exception e) {
             //noinspection CallToPrintStackTrace
             e.printStackTrace();

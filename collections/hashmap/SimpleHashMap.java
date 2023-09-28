@@ -204,14 +204,15 @@ public class SimpleHashMap <K, V> {
     /*
     getBucket() возвращает список узлов, находящихся на индексе.
      */
-    private String getBucket(int i) {
+    private ArrayList<Node<K, V>> getBucket(int i) {
         Node<?, ?> node = getFirstNodeInBucket(i);
+        ArrayList<Node<K, V>> result = new ArrayList<>();
 
         if (node != null) {
-            String result = node.toString();
+            result.add((Node<K, V>) node);
 
             while (node.getNextNode() != null) {
-                result += "; " + node.getNextNode();
+                result.add((Node<K, V>) node.getNextNode());
                 node = node.getNextNode();
             }
 
