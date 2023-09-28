@@ -64,23 +64,24 @@ public class SimpleHashMapPerformanceTest {
     @Test
     void remove() {
         // HashMap
-        for (int i = 0; i < 10_000; i++) {
+        for (int i = 0; i < 1_000_000; i++) {
             map.put(i, i);
         }
 
         long start = System.currentTimeMillis();
-        for (int i = 0; i < 10_000; i++) {
+        for (int i = 0; i < 1_000_000; i++) {
             map.remove(i);
         }
         System.out.println("remove(): HashMap took " + (System.currentTimeMillis() - start) + " ms");
 
         // SimpleHashMap
-        for (int i = 0; i < 10_000; i++) {
+        myMap = new SimpleHashMap<>(1_000_000);
+        for (int i = 0; i < 1_000_000; i++) {
             myMap.put(i, i);
         }
 
         start = System.currentTimeMillis();
-        for (int i = 0; i < 10_000; i++) {
+        for (int i = 0; i < 1_000_000; i++) {
             myMap.remove(i);
         }
         System.out.println("remove(): SimpleHashMap took " + (System.currentTimeMillis() - start) + " ms");
@@ -89,24 +90,25 @@ public class SimpleHashMapPerformanceTest {
     @Test
     void containsKey() {
         // HashMap
-        for (int i = 0; i < 10_000; i++) {
+        for (int i = 0; i < 1_000_000; i++) {
             map.put(i, i);
         }
 
         long start = System.currentTimeMillis();
-        for (int i = 0; i < 10_000; i++) {
+        for (int i = 0; i < 1_000_000; i++) {
             //noinspection ResultOfMethodCallIgnored
             map.containsKey(i);
         }
         System.out.println("containsKey(): HashMap took " + (System.currentTimeMillis() - start) + " ms");
 
         // SimpleHashMap
-        for (int i = 0; i < 10_000; i++) {
+        myMap = new SimpleHashMap<>(1_000_000);
+        for (int i = 0; i < 1_000_000; i++) {
             myMap.put(i, i);
         }
 
         start = System.currentTimeMillis();
-        for (int i = 0; i < 10_000; i++) {
+        for (int i = 0; i < 1_000_000; i++) {
             myMap.containsKey(i);
         }
         System.out.println("containsKey(): SimpleHashMap took " + (System.currentTimeMillis() - start) + " ms");

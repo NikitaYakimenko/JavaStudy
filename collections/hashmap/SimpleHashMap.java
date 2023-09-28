@@ -119,20 +119,15 @@ public class SimpleHashMap <K, V> {
     public boolean containsKey(K key) {
         boolean containsKey = false;
 
-        for (int i = 0; i <= map.length - 1; i++) {
-            Node<K, V> node = map[i];
+        int i = getIndexByKey(key);
+        Node<K, V> node = map[i];
 
-            if (map[i] != null) { // если индекс не пустой
-
-                while (node != null) { // пока узел существует
-                    if (node.getKey().equals(key)) { // если ключ совпадает
-                        containsKey = true;
-                        break;
-                    }
-
-                    node = node.getNextNode(); // переходим к следующему узлу
-                }
+        while (node != null) {
+            if (node.getKey().equals(key)) {
+                containsKey = true;
+                break;
             }
+            node = node.getNextNode();
         }
 
         return containsKey;
