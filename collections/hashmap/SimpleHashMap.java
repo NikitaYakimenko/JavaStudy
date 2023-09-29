@@ -189,14 +189,14 @@ public class SimpleHashMap <K, V> {
      * Метод getBucket() возвращает список узлов, находящихся на индексе.
      */
     private ArrayList<Node<K, V>> getBucket(int i) {
-        Node<?, ?> node = getFirstNodeInBucket(i);
+        Node<K, V> node = getFirstNodeInBucket(i);
         ArrayList<Node<K, V>> result = new ArrayList<>();
 
         if (node != null) {
-            result.add((Node<K, V>) node);
+            result.add(node);
 
             while (node.getNextNode() != null) {
-                result.add((Node<K, V>) node.getNextNode());
+                result.add(node.getNextNode());
                 node = node.getNextNode();
             }
 
