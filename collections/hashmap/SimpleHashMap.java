@@ -31,9 +31,7 @@ public class SimpleHashMap <K, V> {
         int i = getIndexByKey(key); // получаем индекс на основе ключа
         Node<K, V> newNode = new Node<>(key, value); // создаем новый узел с ключом и значением
 
-        if (needExpansion()) {
-            expand();
-        }
+        if (needExpansion()) expand();
 
         Node<K, V> current = map[i]; // текущий узел
         Node<K, V> previous = null; // предыдущий узел
@@ -65,9 +63,7 @@ public class SimpleHashMap <K, V> {
         int i = getIndexByKey(key); // получаем индекс на основе ключа
         Node <K, V> target = getFirstNodeInBucket(i); // присваиваем целевой узел
 
-        if (target == null) { // если узла не существует
-            return null;
-        }
+        if (target == null) return null;
 
         while (target != null && !target.getKey().equals(key)) { // пока ключ узла не совпадет
             target = target.getNextNode(); // переходим к следующему узлу
@@ -113,20 +109,17 @@ public class SimpleHashMap <K, V> {
      * Метод containsKey() проверяет существование переданного ключа в узлах связанных списков массива.
      */
     public boolean containsKey(K key) {
-        boolean containsKey = false;
-
         int i = getIndexByKey(key);
         Node<K, V> node = map[i];
 
         while (node != null) {
             if (node.getKey().equals(key)) {
-                containsKey = true;
-                break;
+                return true;
             }
             node = node.getNextNode();
         }
 
-        return containsKey;
+        return false;
     }
 
     public void print() {
@@ -150,16 +143,10 @@ public class SimpleHashMap <K, V> {
      * Метод needExpansion() проверяет необходимость расширения массива, основываясь на заполненности индексов массива.
      */
     private boolean needExpansion() { // проверяем не заполнен ли массив
-        boolean expansionNeeded = true;
-
         for (Node<?, ?> bucket : map) {
-            if (bucket == null) {
-                expansionNeeded = false;
-                break;
-            }
+            if (bucket == null) return false;
         }
-
-        return expansionNeeded;
+        return true;
     }
 
     /**
