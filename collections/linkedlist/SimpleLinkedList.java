@@ -2,8 +2,8 @@ package collections.linkedlist;
 
 public class SimpleLinkedList <V> {
 
-    Node<V> firstNode;
-    Node<V> lastNode;
+    Node<V> head;
+    Node<V> tail;
 
     int size = 0;
 
@@ -11,40 +11,62 @@ public class SimpleLinkedList <V> {
         linkLast(value);
     }
 
-    public V get(int i) {
-        if (isValidIndex(i)) {
-            return getNodeOnIndex(i).value;
+    public void add(int index, V value) {
+        if (index == size) {
+            linkLast(value);
+        } else if (isValidIndex(index)) {
+            linkBefore(value, getNodeOnIndex(index));
+        } else {
+            throw new IndexOutOfBoundsException(outOfBoundsMsg(index));
+        }
+    }
+
+    public V get(int index) {
+        if (isValidIndex(index)) {
+            return getNodeOnIndex(index).value;
         } else {
             return null;
         }
     }
 
     private void linkLast(V value) {
-        Node<V> currentLast = lastNode;
+        Node<V> currentLast = tail;
         Node<V> newNode = new Node<>(currentLast, value, null);
-        lastNode = newNode;
+        tail = newNode;
         if (currentLast == null) {
-            firstNode = newNode;
+            head = newNode;
         } else {
             currentLast.next = newNode;
         }
         size++;
     }
 
-    private boolean isValidIndex(int i) {
-        return i >= 0 && i < size;
+    private void linkBefore(V value, Node<V> target) {
+        Node<V> previous = target.previous;
+        Node<V> newNode = new Node<>(previous, value, target);
+        target.previous = newNode;
+        if (previous == null) {
+            head = newNode;
+        } else {
+            previous.next = newNode;
+        }
+        size++;
     }
 
-    private Node<V> getNodeOnIndex(int i) {
+    private boolean isValidIndex(int index) {
+        return index >= 0 && index < size;
+    }
+
+    private Node<V> getNodeOnIndex(int index) {
         Node<V> target;
-        if (i < (size >> 2)) {
-            target = firstNode;
-            for (int position = 0; position < i; position++) {
+        if (index < (size >> 2)) {
+            target = head;
+            for (int position = 0; position < index; position++) {
                 target = target.next;
             }
         } else {
-            target = lastNode;
-            for (int position = size - 1; position > i; position--) {
+            target = tail;
+            for (int position = size - 1; position > index; position--) {
                 target = target.previous;
             }
         }
@@ -56,11 +78,15 @@ public class SimpleLinkedList <V> {
     }
 
     public void print() {
-        Node<V> i = firstNode;
-        while (i != null) {
-            System.out.print((i == lastNode) ? i + "\n" : i + "; ");
-            i = i.next;
+        Node<V> target = head;
+        while (target != null) {
+            System.out.print((target == tail) ? target + "\n" : target + "; ");
+            target = target.next;
         }
+    }
+
+    private String outOfBoundsMsg(int index) {
+        return "Index: " + index + ", Size: " + size;
     }
 
     private static class Node<V> {
