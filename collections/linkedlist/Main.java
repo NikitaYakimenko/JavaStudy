@@ -7,15 +7,15 @@ public class Main {
         list.add("one");
         list.add("two");
         list.add("three");
-        list.add("four");
-        list.add("five");
-        list.add("six");
-        list.add("seven");
+//        list.add("four");
+//        list.add("five");
+//        list.add("six");
+//        list.add("seven");
         list.print();
-        System.out.println(list.size());
-        System.out.println(list.get(8));
-        list.add(9, "test");
+//        System.out.println(list.size());
+        list.removeFirst();
+//        System.out.println(list.get(9));
         list.print();
-        System.out.println(list.size());
+//        System.out.println(list.size());
     }
 }

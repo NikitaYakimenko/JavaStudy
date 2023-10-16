@@ -1,10 +1,10 @@
 package collections.linkedlist;
 
-public class SimpleLinkedList <V> {
+import java.util.NoSuchElementException;
 
+public class SimpleLinkedList <V> {
     Node<V> head;
     Node<V> tail;
-
     int size = 0;
 
     public void add(V value) {
@@ -12,7 +12,9 @@ public class SimpleLinkedList <V> {
     }
 
     public void add(int index, V value) {
-        if (index == size) {
+        if (index == 0) {
+            linkFirst(value);
+        } else if (index == size) {
             linkLast(value);
         } else if (isValidIndex(index)) {
             linkBefore(value, getNodeOnIndex(index));
@@ -23,10 +25,59 @@ public class SimpleLinkedList <V> {
 
     public V get(int index) {
         if (isValidIndex(index)) {
+            if (index == 0) {
+                return head.value;
+            } else if (index == size - 1) {
+                return tail.value;
+            }
             return getNodeOnIndex(index).value;
         } else {
             return null;
         }
+    }
+
+    public void remove(V value) {
+        if (value == null) {
+            for (Node<V> target = head; target != null; target = target.next) {
+                if (target.value == null) {
+                    unlink(target);
+                }
+            }
+        } else {
+            for (Node<V> target = head; target != null; target = target.next) {
+                if (value.equals(target.value)) {
+                    unlink(target);
+                }
+            }
+        }
+    }
+
+    public void removeFirst() {
+        Node<V> currentFirst = head;
+        if (currentFirst == null) {
+            throw new NoSuchElementException();
+        }
+        unlinkFirst(currentFirst);
+    }
+
+    public void removeLast() {
+        Node<V> currentLast = tail;
+        if (currentLast == null) {
+            throw new NoSuchElementException();
+        }
+        unlinkLast(currentLast);
+    }
+
+    private void linkFirst(V value) {
+        Node<V> currentFirst = head;
+        Node<V> newNode = new Node<>(null, value, currentFirst);
+        head = newNode;
+        if (currentFirst == null) {
+            tail = newNode;
+        } else {
+            currentFirst.previous = newNode;
+        }
+        size++;
     }
 
     private void linkLast(V value) {
@@ -51,6 +102,51 @@ public class SimpleLinkedList <V> {
             previous.next = newNode;
         }
         size++;
+    }
+
+    private void unlinkFirst(Node<V> target) {
+        Node<V> newFirst = target.next;
+        target.value = null;
+        target.next = null;
+        head = newFirst;
+        if (newFirst == null) {
+            tail = null;
+        } else {
+            newFirst.previous = null;
+        }
+        size--;
+    }
+
+    private void unlinkLast(Node<V> target) {
+        Node<V> newLast = target.previous;
+        target.value = null;
+        target.previous = null;
+        tail = newLast;
+        if (newLast == null) {
+            head = null;
+        } else {
+            newLast.next = null;
+        }
+        size--;
+    }
+
+    private void unlink(Node<V> target) {
+        Node<V> next = target.next;
+        Node<V> previous = target.previous;
+        if (previous == null) {
+            head = next;
+        } else {
+            previous.next = next;
+            target.previous = null;
+        }
+        if (next == null) {
+            tail = previous;
+        } else {
+            next.previous = previous;
+            target.next = null;
+        }
+        target.value = null;
+        size--;
     }
 
     private boolean isValidIndex(int index) {

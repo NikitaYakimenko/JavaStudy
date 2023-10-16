@@ -22,6 +22,9 @@ class SimpleLinkedListTest {
         myList.add("one");
         assertEquals("one", myList.get(1));
 
+        myList.add("two");
+        assertEquals("two", myList.get(2));
+
         myList.add(0, "newZero");
         assertEquals("newZero", myList.get(0));
     }
@@ -33,7 +36,13 @@ class SimpleLinkedListTest {
         myList.add("zero");
         assertEquals("zero", myList.get(0));
 
-        assertNull(myList.get(1));
+        myList.add("one");
+        assertEquals("one", myList.get(1));
+
+        myList.add("two");
+        assertEquals("two", myList.get(2));
+
+        assertNull(myList.get(3));
     }
 
     @Test
@@ -45,5 +54,35 @@ class SimpleLinkedListTest {
 
         myList.add("one");
         assertEquals(2, myList.size());
+    }
+
+    @Test
+    void remove() {
+        myList.add("zero");
+        myList.add("one");
+        myList.add("two");
+
+        myList.remove("one");
+        assertEquals("two", myList.get(1));
+    }
+
+    @Test
+    void removeFirst() {
+        myList.add("zero");
+        myList.add("one");
+        myList.add("two");
+
+        myList.removeFirst();
+        assertEquals("one", myList.get(0));
+    }
+
+    @Test
+    void removeLast() {
+        myList.add("zero");
+        myList.add("one");
+        myList.add("two");
+
+        myList.removeLast();
+        assertNull(myList.get(2));
     }
 }

@@ -97,4 +97,73 @@ class SimpleLinkedListPerformanceTest {
         }
         System.out.println("size(): SimpleLinkedList took " + (System.currentTimeMillis() - start) + " ms");
     }
+
+    @Test
+    void remove() {
+        // LinkedList
+        for (int i = 0; i < 1_000_000; i++) {
+            list.add(i);
+        }
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < 1_000_000; i++) {
+            list.remove(Integer.valueOf(i));
+        }
+        System.out.println("remove(): LinkedList took " + (System.currentTimeMillis() - start) + " ms");
+
+        // SimpleLinkedList
+        for (int i = 0; i < 1_000_000; i++) {
+            myList.add(i);
+        }
+        start = System.currentTimeMillis();
+        for (int i = 0; i < 1_000_000; i++) {
+            myList.remove(i);
+        }
+        System.out.println("remove(): SimpleLinkedList took " + (System.currentTimeMillis() - start) + " ms");
+    }
+
+    @Test
+    void removeFirst() {
+        // LinkedList
+        for (int i = 0; i < 1_000_000; i++) {
+            list.add(i);
+        }
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < 1_000_000; i++) {
+            list.removeFirst();
+        }
+        System.out.println("removeFirst(): LinkedList took " + (System.currentTimeMillis() - start) + " ms");
+
+        // SimpleLinkedList
+        for (int i = 0; i < 1_000_000; i++) {
+            myList.add(i);
+        }
+        start = System.currentTimeMillis();
+        for (int i = 0; i < 1_000_000; i++) {
+            myList.removeFirst();
+        }
+        System.out.println("removeFirst(): SimpleLinkedList took " + (System.currentTimeMillis() - start) + " ms");
+    }
+
+    @Test
+    void removeLast() {
+        // LinkedList
+        for (int i = 0; i < 1_000_000; i++) {
+            list.add(i);
+        }
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < 1_000_000; i++) {
+            list.removeLast();
+        }
+        System.out.println("removeLast(): LinkedList took " + (System.currentTimeMillis() - start) + " ms");
+
+        // SimpleLinkedList
+        for (int i = 0; i < 1_000_000; i++) {
+            myList.add(i);
+        }
+        start = System.currentTimeMillis();
+        for (int i = 0; i < 1_000_000; i++) {
+            myList.removeLast();
+        }
+        System.out.println("removeLast(): SimpleLinkedList took " + (System.currentTimeMillis() - start) + " ms");
+    }
 }
