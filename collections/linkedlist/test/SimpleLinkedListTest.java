@@ -53,7 +53,20 @@ class SimpleLinkedListTest {
         assertEquals(1, myList.size());
 
         myList.add("one");
-        assertEquals(2, myList.size());
+        myList.add("two");
+        myList.add("three");
+        myList.add("four");
+        myList.add("five");
+        assertEquals(6, myList.size());
+
+        myList.remove("three");
+        assertEquals(5, myList.size());
+
+        myList.removeFirst();
+        assertEquals(4, myList.size());
+
+        myList.removeLast();
+        assertEquals(3, myList.size());
     }
 
     @Test
