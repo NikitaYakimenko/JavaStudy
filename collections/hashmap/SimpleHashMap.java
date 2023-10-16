@@ -12,21 +12,11 @@ public class SimpleHashMap <K, V> {
         map = new Node[capacity];
     }
 
-    /**
-     * Конструктор для случаев хранения больших объемов данных
-     */
     public SimpleHashMap(int capacity) {
         this.capacity = capacity;
         map = new Node[this.capacity];
     }
 
-    /**
-     * Метод put() используется для добавления новых узлов и замены значений существующих узлов.
-     * На основе хеша ключа вычисляется индекс:
-     * - если на индексе пусто, добавляется новый узел;
-     * - если на индексе есть узел с эквивалентным ключом, значение этого узла перезаписывается;
-     * - если на индексе есть узел с отличным ключом, узел добавляется в список.
-     */
     public void put(K key, V value) { // принимаем на вход любые типы
         int i = getIndexByKey(key); // получаем индекс на основе ключа
         Node<K, V> newNode = new Node<>(key, value); // создаем новый узел с ключом и значением
@@ -53,12 +43,6 @@ public class SimpleHashMap <K, V> {
         }
     }
 
-    /**
-     * Метод get() используется для получения значения узла на основе переданного ключа.
-     * На основе хеша ключа вычисляется индекс:
-     * - если на индексе пусто, возвращается null;
-     * - если на индексе есть узел или список узлов, возвращается узел с эквивалентным ключом.
-     */
     public V get(K key) {
         int i = getIndexByKey(key); // получаем индекс на основе ключа
         Node <K, V> target = getFirstNodeInBucket(i); // присваиваем целевой узел
@@ -76,13 +60,6 @@ public class SimpleHashMap <K, V> {
         }
     }
 
-    /**
-     * Метод remove() используется для удаления узлов по указанному ключу.
-     * Метод выполняется только если переданный ключ содержится в списках массива.
-     * На основе хеша ключа вычисляется индекс:
-     * - если на индексе находится единственный узел, он удаляется;
-     * - если на индексе находится список, то найденный узел удаляется, а его ссылка присваивается предыдущему.
-     */
     public void remove(K key) { // удаляем узел по ключу
         if (containsKey(key)) { // если ключ содержится в списках массива
             int i = getIndexByKey(key); // получаем индекс на основе ключа
@@ -105,9 +82,6 @@ public class SimpleHashMap <K, V> {
         }
     }
 
-    /**
-     * Метод containsKey() проверяет существование переданного ключа в узлах связанных списков массива.
-     */
     public boolean containsKey(K key) {
         int i = getIndexByKey(key);
         Node<K, V> node = map[i];
@@ -138,10 +112,6 @@ public class SimpleHashMap <K, V> {
         return capacity;
     }
 
-    // приватные методы
-    /**
-     * Метод needExpansion() проверяет необходимость расширения массива, основываясь на заполненности индексов массива.
-     */
     private boolean needExpansion() { // проверяем не заполнен ли массив
         for (Node<?, ?> bucket : map) {
             if (bucket == null) return false;
@@ -149,32 +119,19 @@ public class SimpleHashMap <K, V> {
         return true;
     }
 
-    /**
-     * Метод expand() увеличивает массив на ~30%
-     */
     private void expand() {
         capacity += capacity / 3;
         map = Arrays.copyOf(map, capacity);
     }
 
-    /**
-     * Метод getIndexByKey() вычисляет индекс на основе переданного ключа.
-     * Метод применяет & к максимальному индексу массива и хешу ключа, гарантируя расположение индекса внутри диапазона массива.
-     */
     private int getIndexByKey(K key) {
         return (map.length - 1) & key.hashCode();
     }
 
-    /**
-     * Метод getFirstNodeInBucket() возвращает первый узел, находящийся на индексе.
-    */
     private Node<K, V> getFirstNodeInBucket(int i) {
         return map[i];
     }
 
-    /**
-     * Метод getBucket() возвращает список узлов, находящихся на индексе.
-     */
     private ArrayList<Node<K, V>> getBucket(int i) {
         Node<K, V> node = getFirstNodeInBucket(i);
         ArrayList<Node<K, V>> result = new ArrayList<>();
