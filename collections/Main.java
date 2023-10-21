@@ -5,7 +5,7 @@ import collections.linkedlist.SimpleLinkedList;
 
 public class Main {
     public static void main(String[] args) {
-        //SimpleLinkedList
+        // SimpleLinkedList
         SimpleLinkedList<String> list = new SimpleLinkedList<>();
         list.add("zero");
         list.add("one");
@@ -21,15 +21,12 @@ public class Main {
         list.print();
 
         // SimpleHashMap
-        SimpleHashMap<String, String> myMap = new SimpleHashMap<>();
-        myMap.put("1", "one");
-        myMap.put("2", "two");
-        myMap.put("3", "three");
-        myMap.put("4", "four");
-        myMap.put("9", "nine");
-        myMap.put("12", "twelve");
-        myMap.put("23", "twenty three");
-
-        myMap.print();
+        SimpleHashMap<Integer, String> map = new SimpleHashMap<>();
+        map.put(1, "one");
+        map.remove(1);
+        System.out.println(map.get(1));
+        System.out.println(map.containsKey(1));
+        System.out.println(1 << 30);
+        System.out.println(2 << 29);
     }
 }

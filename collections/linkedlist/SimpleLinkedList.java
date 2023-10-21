@@ -2,7 +2,7 @@ package collections.linkedlist;
 
 import java.util.NoSuchElementException;
 
-public class SimpleLinkedList <V> {
+public class SimpleLinkedList<V> {
     Node<V> head;
     Node<V> tail;
     int size = 0;

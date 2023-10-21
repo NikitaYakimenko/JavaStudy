@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class SimpleHashMapPerformanceTest {
     Map<Integer, Integer> map;
     SimpleHashMap<Integer, Integer> myMap;
@@ -27,10 +29,10 @@ public class SimpleHashMapPerformanceTest {
         System.out.println("put(): HashMap took " + (System.currentTimeMillis() - start) + " ms");
 
         // SimpleHashMap
-        myMap = new SimpleHashMap<>(1_000_000);
         start = System.currentTimeMillis();
         for (int i = 0; i < 1_000_000; i++) {
             myMap.put(i, i);
+            assertEquals(i, myMap.get(i));
         }
         System.out.println("put(): SimpleHashMap took " + (System.currentTimeMillis() - start) + " ms");
     }
@@ -49,11 +51,10 @@ public class SimpleHashMapPerformanceTest {
         System.out.println("get(): HashMap took " + (System.currentTimeMillis() - start) + " ms");
 
         // SimpleHashMap
-        myMap = new SimpleHashMap<>(1_000_000);
         for (int i = 0; i < 1_000_000; i++) {
             myMap.put(i, i);
         }
-        
+
         start = System.currentTimeMillis();
         for (int i = 0; i < 1_000_000; i++) {
             myMap.get(i);
@@ -75,7 +76,6 @@ public class SimpleHashMapPerformanceTest {
         System.out.println("remove(): HashMap took " + (System.currentTimeMillis() - start) + " ms");
 
         // SimpleHashMap
-        myMap = new SimpleHashMap<>(1_000_000);
         for (int i = 0; i < 1_000_000; i++) {
             myMap.put(i, i);
         }
@@ -102,7 +102,6 @@ public class SimpleHashMapPerformanceTest {
         System.out.println("containsKey(): HashMap took " + (System.currentTimeMillis() - start) + " ms");
 
         // SimpleHashMap
-        myMap = new SimpleHashMap<>(1_000_000);
         for (int i = 0; i < 1_000_000; i++) {
             myMap.put(i, i);
         }
@@ -129,7 +128,6 @@ public class SimpleHashMapPerformanceTest {
         System.out.println("size(): HashMap took " + (System.currentTimeMillis() - start) + " ms");
 
         // SimpleHashMap
-        myMap = new SimpleHashMap<>(1_000_000);
         for (int i = 0; i < 1_000_000; i++) {
             myMap.put(i, i);
         }
