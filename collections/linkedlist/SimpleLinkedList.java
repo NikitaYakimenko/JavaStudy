@@ -3,9 +3,9 @@ package collections.linkedlist;
 import java.util.NoSuchElementException;
 
 public class SimpleLinkedList<V> {
-    Node<V> head;
-    Node<V> tail;
-    int size = 0;
+    private Node<V> head;
+    private Node<V> tail;
+    private int size = 0;
 
     public void add(V value) {
         linkLast(value);

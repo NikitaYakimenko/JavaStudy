@@ -352,11 +352,11 @@ public class SimpleHashMap<K, V> {
     }
 
     private static final class TreeNode<K, V> extends Node<K, V> {
-        TreeNode<K, V> parent;
-        TreeNode<K, V> left;
-        TreeNode<K, V> right;
-        TreeNode<K, V> prev;
-        boolean red;
+        private TreeNode<K, V> parent;
+        private TreeNode<K, V> left;
+        private TreeNode<K, V> right;
+        private TreeNode<K, V> prev;
+        private boolean red;
 
         private TreeNode(int hash, K key, V val, Node<K, V> next) {
             super(hash, key, val, next);
@@ -488,8 +488,7 @@ public class SimpleHashMap<K, V> {
             return hd;
         }
 
-        private void removeTreeNode(SimpleHashMap<K, V> map, Node<K, V>[] tab,
-                                  boolean movable) {
+        private void removeTreeNode(SimpleHashMap<K, V> map, Node<K, V>[] tab, boolean movable) {
             int n;
             if (tab == null || (n = tab.length) == 0)
                 return;
@@ -650,8 +649,7 @@ public class SimpleHashMap<K, V> {
             return root;
         }
 
-        private static <K, V> TreeNode<K, V> rotateRight(TreeNode<K, V> root,
-                                                       TreeNode<K, V> p) {
+        private static <K, V> TreeNode<K, V> rotateRight(TreeNode<K, V> root, TreeNode<K, V> p) {
             TreeNode<K, V> l, pp, lr;
             if (p != null && (l = p.left) != null) {
                 if ((lr = p.left = l.right) != null)
@@ -722,8 +720,7 @@ public class SimpleHashMap<K, V> {
             }
         }
 
-        private static <K, V> TreeNode<K, V> balanceDeletion(TreeNode<K, V> root,
-                                                           TreeNode<K, V> x) {
+        private static <K, V> TreeNode<K, V> balanceDeletion(TreeNode<K, V> root, TreeNode<K, V> x) {
             for (TreeNode<K, V> xp, xpl, xpr;;) {
                 if (x == null || x == root)
                     return root;
