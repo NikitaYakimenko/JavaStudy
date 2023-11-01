@@ -1,32 +1,48 @@
 package collections;
 
+import collections.arraylist.SimpleArrayList;
 import collections.hashmap.SimpleHashMap;
 import collections.linkedlist.SimpleLinkedList;
 
 public class Main {
     public static void main(String[] args) {
         // SimpleLinkedList
-        SimpleLinkedList<String> list = new SimpleLinkedList<>();
-        list.add("zero");
-        list.add("one");
-        list.add("two");
-        list.add("three");
-        list.add("four");
-        list.add("five");
-        list.add("six");
-        list.add("seven");
+        System.out.println("    SimpleLinkedList:");
+        SimpleLinkedList<String> myLinkedList = new SimpleLinkedList<>();
+        myLinkedList.add("zero");
+        myLinkedList.add("one");
+        myLinkedList.add("two");
+        myLinkedList.add("three");
+        myLinkedList.add("four");
+        myLinkedList.add("five");
+        myLinkedList.add("six");
+        myLinkedList.add("seven");
 
-        list.print();
-        list.removeFirst();
-        list.print();
+        myLinkedList.print();
+        myLinkedList.removeFirst();
+        myLinkedList.print();
+
+        System.out.println();
 
         // SimpleHashMap
-        SimpleHashMap<Integer, String> map = new SimpleHashMap<>();
-        map.put(1, "one");
-        map.remove(1);
-        System.out.println(map.get(1));
-        System.out.println(map.containsKey(1));
+        System.out.println("    SimpleHashMap:");
+        SimpleHashMap<Integer, String> myHashMap = new SimpleHashMap<>();
+        myHashMap.put(1, "one");
+        myHashMap.remove(1);
+        System.out.println(myHashMap.get(1));
+        System.out.println(myHashMap.containsKey(1));
         System.out.println(1 << 30);
         System.out.println(2 << 29);
+
+        System.out.println();
+
+        // SimpleArrayList
+        System.out.println("    SimpleArrayList:");
+        SimpleArrayList<String> myArrayList = new SimpleArrayList<>(2);
+        myArrayList.add("zero");
+        myArrayList.add("one");
+        myArrayList.add("two");
+        myArrayList.add("three");
+        myArrayList.print();
     }
 }
