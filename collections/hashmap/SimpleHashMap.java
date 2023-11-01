@@ -5,36 +5,36 @@ import java.lang.reflect.Type;
 import java.util.*;
 
 public class SimpleHashMap<K, V> {
-    private static final int defaultInitialCapacity = 16;
-    private static final int maximumCapacity = 1 << 30;
-    private static final float defaultLoadFactor = 0.75f;
-    private static final int treeifyFactor = 8;
-    private static final int untreeifyFactor = 6;
-    private static final int minTreeifyCapacity = 64;
+    private static final int DEFAULT_CAPACITY = 16;
+    private static final int MAXIMUM_CAPACITY = 1 << 30;
+    private static final float DEFAULT_LOAD_FACTOR = 0.75f;
+    private static final int TREEIFY_FACTOR = 8;
+    private static final int UNTREEIFY_FACTOR = 6;
+    private static final int MIN_TREEIFY_CAPACITY = 64;
     private Node<K, V>[] map;
     private int size;
     private int resizeFactor;
-    private final float loadFactor;
+    private final float LOAD_FACTOR;
 
     public SimpleHashMap() {
-        this.loadFactor = defaultLoadFactor;
+        this.LOAD_FACTOR = DEFAULT_LOAD_FACTOR;
     }
 
     public SimpleHashMap(int initialCapacity) {
-        this(initialCapacity, defaultLoadFactor);
+        this(initialCapacity, DEFAULT_LOAD_FACTOR);
     }
 
     public SimpleHashMap(int initialCapacity, float loadFactor) {
         if (initialCapacity < 0) {
             throw new IllegalArgumentException("Illegal initial capacity: " + initialCapacity);
         }
-        if (initialCapacity > maximumCapacity) {
-            initialCapacity = maximumCapacity;
+        if (initialCapacity > MAXIMUM_CAPACITY) {
+            initialCapacity = MAXIMUM_CAPACITY;
         }
         if (loadFactor <= 0 || Float.isNaN(loadFactor)) {
             throw new IllegalArgumentException("Illegal load factor: " + loadFactor);
         }
-        this.loadFactor = loadFactor;
+        this.LOAD_FACTOR = loadFactor;
         this.resizeFactor = mapSizeFor(initialCapacity);
     }
 
@@ -91,7 +91,7 @@ public class SimpleHashMap<K, V> {
                 for (int binCount = 0; ; ++binCount) {
                     if ((nextNode = putNode.next) == null) {
                         putNode.next = new Node<>(hash, key, value, null);
-                        if (binCount >= treeifyFactor - 1) {
+                        if (binCount >= TREEIFY_FACTOR - 1) {
                             treeifyBin(currentMap, hash);
                         }
                         break;
@@ -114,21 +114,21 @@ public class SimpleHashMap<K, V> {
         int oldThr = resizeFactor;
         int newCap, newThr = 0;
         if (oldCap > 0) {
-            if (oldCap >= maximumCapacity) {
+            if (oldCap >= MAXIMUM_CAPACITY) {
                 resizeFactor = Integer.MAX_VALUE;
                 return currentMap;
-            } else if ((newCap = oldCap << 1) < maximumCapacity && oldCap >= defaultInitialCapacity) {
+            } else if ((newCap = oldCap << 1) < MAXIMUM_CAPACITY && oldCap >= DEFAULT_CAPACITY) {
                 newThr = oldThr << 1;
             }
         } else if (oldThr > 0) {
             newCap = oldThr;
         } else {
-            newCap = defaultInitialCapacity;
-            newThr = (int)(defaultLoadFactor * defaultInitialCapacity);
+            newCap = DEFAULT_CAPACITY;
+            newThr = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_CAPACITY);
         }
         if (newThr == 0) {
-            float ft = (float)newCap * loadFactor;
-            newThr = (newCap < maximumCapacity && ft < (float) maximumCapacity ? (int)ft : Integer.MAX_VALUE);
+            float ft = (float)newCap * LOAD_FACTOR;
+            newThr = (newCap < MAXIMUM_CAPACITY && ft < (float) MAXIMUM_CAPACITY ? (int)ft : Integer.MAX_VALUE);
         }
         resizeFactor = newThr;
         @SuppressWarnings("unchecked")
@@ -241,7 +241,7 @@ public class SimpleHashMap<K, V> {
     private void treeifyBin(Node<K, V>[] currentMap, int hash) {
         int mapLength, index;
         Node<K, V> e;
-        if (currentMap == null || (mapLength = currentMap.length) < minTreeifyCapacity) {
+        if (currentMap == null || (mapLength = currentMap.length) < MIN_TREEIFY_CAPACITY) {
             resize();
         } else if ((e = currentMap[index = (mapLength - 1) & hash]) != null) {
             TreeNode<K, V> hd = null, tl = null;
@@ -337,7 +337,7 @@ public class SimpleHashMap<K, V> {
 
     private static int mapSizeFor(int cap) {
         int n = -1 >>> Integer.numberOfLeadingZeros(cap - 1);
-        return (n < 0) ? 1 : (n >= maximumCapacity) ? maximumCapacity : n + 1;
+        return (n < 0) ? 1 : (n >= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
     }
 
     private TreeNode<K, V> replacementTreeNode(Node<K, V> p, Node<K, V> next) {
@@ -617,7 +617,7 @@ public class SimpleHashMap<K, V> {
             }
 
             if (loHead != null) {
-                if (lc <= untreeifyFactor) {
+                if (lc <= UNTREEIFY_FACTOR) {
                     tab[index] = loHead.untreeify(map);
                 } else {
                     tab[index] = loHead;
@@ -627,7 +627,7 @@ public class SimpleHashMap<K, V> {
                 }
             }
             if (hiHead != null) {
-                if (hc <= untreeifyFactor) {
+                if (hc <= UNTREEIFY_FACTOR) {
                     tab[index + bit] = hiHead.untreeify(map);
                 } else {
                     tab[index + bit] = hiHead;

@@ -88,4 +88,34 @@ class SimpleHashMapTest {
         myMap.put(1, "one");
         assertFalse(myMap.isEmpty());
     }
+
+    @Test
+    void flow() {
+        for (int i = 0; i < 1000; i++) {
+            myMap.put(i, String.valueOf(i));
+            assertEquals(String.valueOf(i), myMap.get(i));
+        }
+
+        for (int i = 0; i < 1000; i++) {
+            assertEquals(String.valueOf(i), myMap.get(i));
+        }
+
+        for (int i = 0; i < 500; i++) {
+            myMap.remove(i);
+            assertNull(myMap.get(i));
+        }
+
+        for (int i = 0; i < 500; i++) {
+            assertNull(myMap.get(i));
+        }
+
+        for (int i = 500; i < 1000; i++) {
+            myMap.remove(i, String.valueOf(i));
+            assertNull(myMap.get(i));
+        }
+
+        for (int i = 500; i < 1000; i++) {
+            assertNull(myMap.get(i));
+        }
+    }
 }
