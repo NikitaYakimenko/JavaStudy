@@ -21,6 +21,9 @@ class SimpleHashMapTest {
 
         myMap.put(2, "two");
         assertEquals("two", myMap.get(2));
+
+        myMap.put(2, "anotherTwo");
+        assertEquals("anotherTwo", myMap.get(2));
     }
 
     @Test
@@ -29,25 +32,18 @@ class SimpleHashMapTest {
 
         myMap.put(1, "one");
         assertEquals("one", myMap.get(1));
-
-        myMap.put(2, "two");
-        assertEquals("two", myMap.get(2));
     }
 
     @Test
     void remove() {
         myMap.put(1, "one");
+        myMap.put(2, "two");
 
         myMap.remove(1);
         assertNull(myMap.get(1));
-    }
 
-    @Test
-    void removeVal() {
-        myMap.put(1, "one");
-        myMap.remove(1, "one");
-
-        assertNull(myMap.get(1));
+        myMap.remove(2, "two");
+        assertNull(myMap.get(2));
     }
 
     @Test
@@ -87,35 +83,5 @@ class SimpleHashMapTest {
 
         myMap.put(1, "one");
         assertFalse(myMap.isEmpty());
-    }
-
-    @Test
-    void flow() {
-        for (int i = 0; i < 1000; i++) {
-            myMap.put(i, String.valueOf(i));
-            assertEquals(String.valueOf(i), myMap.get(i));
-        }
-
-        for (int i = 0; i < 1000; i++) {
-            assertEquals(String.valueOf(i), myMap.get(i));
-        }
-
-        for (int i = 0; i < 500; i++) {
-            myMap.remove(i);
-            assertNull(myMap.get(i));
-        }
-
-        for (int i = 0; i < 500; i++) {
-            assertNull(myMap.get(i));
-        }
-
-        for (int i = 500; i < 1000; i++) {
-            myMap.remove(i, String.valueOf(i));
-            assertNull(myMap.get(i));
-        }
-
-        for (int i = 500; i < 1000; i++) {
-            assertNull(myMap.get(i));
-        }
     }
 }

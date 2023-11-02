@@ -22,7 +22,7 @@ class SimpleLinkedListTest {
         myList.add("one");
         assertEquals("one", myList.get(1));
 
-        myList.add("two");
+        myList.add(2, "two");
         assertEquals("two", myList.get(2));
 
         myList.add(0, "newZero");
@@ -43,30 +43,6 @@ class SimpleLinkedListTest {
         assertEquals("two", myList.get(2));
 
         assertNull(myList.get(3));
-    }
-
-    @Test
-    void size() {
-        assertEquals(0, myList.size());
-
-        myList.add("zero");
-        assertEquals(1, myList.size());
-
-        myList.add("one");
-        myList.add("two");
-        myList.add("three");
-        myList.add("four");
-        myList.add("five");
-        assertEquals(6, myList.size());
-
-        myList.remove("three");
-        assertEquals(5, myList.size());
-
-        myList.removeFirst();
-        assertEquals(4, myList.size());
-
-        myList.removeLast();
-        assertEquals(3, myList.size());
     }
 
     @Test
@@ -97,5 +73,46 @@ class SimpleLinkedListTest {
 
         myList.removeLast();
         assertNull(myList.get(2));
+    }
+
+    @Test
+    void contains() {
+        assertFalse(myList.contains("zero"));
+
+        myList.add("zero");
+        assertTrue(myList.contains("zero"));
+    }
+
+    @Test
+    void size() {
+        assertEquals(0, myList.size());
+
+        myList.add("zero");
+        assertEquals(1, myList.size());
+
+        myList.add("one");
+        myList.add("two");
+        myList.add("three");
+        assertEquals(4, myList.size());
+
+        myList.remove("two");
+        assertEquals(3, myList.size());
+
+        myList.removeFirst();
+        assertEquals(2, myList.size());
+
+        myList.removeLast();
+        assertEquals(1, myList.size());
+    }
+
+    @Test
+    void isEmpty() {
+        assertTrue(myList.isEmpty());
+
+        myList.add("zero");
+        assertFalse(myList.isEmpty());
+
+        myList.remove("zero");
+        assertTrue(myList.isEmpty());
     }
 }

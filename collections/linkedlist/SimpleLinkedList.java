@@ -1,5 +1,6 @@
 package collections.linkedlist;
 
+import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
 public class SimpleLinkedList<V> {
@@ -66,6 +67,26 @@ public class SimpleLinkedList<V> {
             throw new NoSuchElementException();
         }
         unlinkLast(currentLast);
+    }
+
+    public boolean contains(Object value) {
+        return indexOf(value) >= 0;
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    public void print() {
+        Node<V> target = head;
+        while (target != null) {
+            System.out.print((target == tail) ? target + "\n" : target + "; ");
+            target = target.next;
+        }
     }
 
     private void linkFirst(V value) {
@@ -149,6 +170,24 @@ public class SimpleLinkedList<V> {
         size--;
     }
 
+    private int indexOf(Object value) {
+        int index = 0;
+        if (value == null) {
+            for (Node<V> node = head; node != null; node = node.next) {
+                if (node.value == null)
+                    return index;
+                index++;
+            }
+        } else {
+            for (Node<V> node = head; node != null; node = node.next) {
+                if (value.equals(node.value))
+                    return index;
+                index++;
+            }
+        }
+        return -1;
+    }
+
     private boolean isValidIndex(int index) {
         return index >= 0 && index < size;
     }
@@ -167,18 +206,6 @@ public class SimpleLinkedList<V> {
             }
         }
         return target;
-    }
-
-    public int size() {
-        return size;
-    }
-
-    public void print() {
-        Node<V> target = head;
-        while (target != null) {
-            System.out.print((target == tail) ? target + "\n" : target + "; ");
-            target = target.next;
-        }
     }
 
     private String outOfBoundsMsg(int index) {

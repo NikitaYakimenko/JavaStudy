@@ -75,6 +75,44 @@ public class SimpleHashMap<K, V> {
         return size == 0;
     }
 
+//    private void putVal(int hash, K key, V value) {
+//        Node<K, V>[] currentMap;
+//        Node<K, V> putNode;
+//        int bucketLength, index;
+//        if ((currentMap = map) == null || (bucketLength = currentMap.length) == 0) {
+//            bucketLength = (currentMap = resize()).length;
+//        }
+//        if ((putNode = currentMap[index = (bucketLength - 1) & hash]) == null) {
+//            currentMap[index] = new Node<>(hash, key, value, null);
+//        } else {
+//            Node<K, V> nextNode;
+//            K currentKey;
+//            if (putNode.hash == hash && ((currentKey = putNode.key) == key || (key != null && key.equals(currentKey)))) {
+//                for (int binCount = 0; ; ++binCount) {
+//                    if ((nextNode = putNode.next) == null) {
+//                        putNode.next = new Node<>(hash, key, value, null);
+//                        if (binCount >= TREEIFY_FACTOR - 1) {
+//                            treeifyBin(currentMap, hash);
+//                        }
+//                        break;
+//                    }
+//                    if (nextNode.hash == hash && ((currentKey = nextNode.key) == key || (key != null && key.equals(currentKey)))) {
+//                        break;
+//                    }
+//                    putNode = nextNode;
+//                }
+//            }
+//            if (nextNode != null) {
+//                if (nextNode.value == null) {
+//                    nextNode.value = value;
+//                }
+//            }
+//        }
+//        if (++size > resizeFactor) {
+//            resize();
+//        }
+//    }
+
     private void putVal(int hash, K key, V value) {
         Node<K, V>[] currentMap;
         Node<K, V> putNode;
@@ -85,22 +123,29 @@ public class SimpleHashMap<K, V> {
         if ((putNode = currentMap[index = (bucketLength - 1) & hash]) == null) {
             currentMap[index] = new Node<>(hash, key, value, null);
         } else {
-            Node<K, V> nextNode;
+            Node<K, V> node;
             K currentKey;
             if (putNode.hash == hash && ((currentKey = putNode.key) == key || (key != null && key.equals(currentKey)))) {
+                node = putNode;
+            } else if (putNode instanceof TreeNode) {
+                node = ((TreeNode<K, V>)putNode).putTreeVal(this, currentMap, hash, key, value);
+            } else {
                 for (int binCount = 0; ; ++binCount) {
-                    if ((nextNode = putNode.next) == null) {
+                    if ((node = putNode.next) == null) {
                         putNode.next = new Node<>(hash, key, value, null);
                         if (binCount >= TREEIFY_FACTOR - 1) {
                             treeifyBin(currentMap, hash);
                         }
                         break;
                     }
-                    if (nextNode.hash == hash && ((currentKey = nextNode.key) == key || (key != null && key.equals(currentKey)))) {
+                    if (node.hash == hash && ((currentKey = node.key) == key || (key != null && key.equals(currentKey)))) {
                         break;
                     }
-                    putNode = nextNode;
+                    putNode = node;
                 }
+            }
+            if (node != null) {
+                node.value = value;
             }
         }
         if (++size > resizeFactor) {
@@ -239,11 +284,11 @@ public class SimpleHashMap<K, V> {
     }
 
     private void treeifyBin(Node<K, V>[] currentMap, int hash) {
-        int mapLength, index;
+        int mapLength;
         Node<K, V> e;
         if (currentMap == null || (mapLength = currentMap.length) < MIN_TREEIFY_CAPACITY) {
             resize();
-        } else if ((e = currentMap[index = (mapLength - 1) & hash]) != null) {
+        } else if ((e = currentMap[(mapLength - 1) & hash]) != null) {
             TreeNode<K, V> hd = null, tl = null;
             do {
                 TreeNode<K, V> p = replacementTreeNode(e, null);
@@ -255,9 +300,7 @@ public class SimpleHashMap<K, V> {
                 }
                 tl = p;
             } while ((e = e.next) != null);
-            if ((currentMap[index] = hd) != null) {
-                hd.treeify(currentMap);
-            }
+            hd.treeify(currentMap);
         }
     }
 
@@ -339,6 +382,10 @@ public class SimpleHashMap<K, V> {
         int n = -1 >>> Integer.numberOfLeadingZeros(cap - 1);
         return (n < 0) ? 1 : (n >= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
     }
+
+//    private TreeNode<K, V> newTreeNode(int hash, K key, V value, Node<K, V> next) {
+//        return new TreeNode<>(hash, key, value, next);
+//    }
 
     private TreeNode<K, V> replacementTreeNode(Node<K, V> p, Node<K, V> next) {
         return new TreeNode<>(p.hash, p.key, p.value, next);
@@ -480,6 +527,52 @@ public class SimpleHashMap<K, V> {
                 tl = p;
             }
             return hd;
+        }
+
+        private TreeNode<K, V> putTreeVal(SimpleHashMap<K, V> map, Node<K, V>[] tab, int h, K k, V v) {
+            Class<?> kc = null;
+            boolean searched = false;
+            TreeNode<K, V> root = (parent != null) ? root() : this;
+            for (TreeNode<K, V> p = root; ; ) {
+                int dir, ph;
+                K pk;
+                if ((ph = p.hash) > h)
+                    dir = -1;
+                else if (ph < h)
+                    dir = 1;
+                else if ((pk = p.key) == k || (k != null && k.equals(pk)))
+                    return p;
+                else if ((kc == null &&
+                        (kc = comparableClassFor(k)) == null) ||
+                        (dir = compareComparables(kc, k, pk)) == 0) {
+                    if (!searched) {
+                        TreeNode<K, V> q, ch;
+                        searched = true;
+                        if (((ch = p.left) != null &&
+                                (q = ch.find(h, k, kc)) != null) ||
+                                ((ch = p.right) != null &&
+                                        (q = ch.find(h, k, kc)) != null))
+                            return q;
+                    }
+                    dir = tieBreakOrder(k, pk);
+                }
+
+                TreeNode<K, V> xp = p;
+                if ((p = (dir <= 0) ? p.left : p.right) == null) {
+                    Node<K, V> xpn = xp.next;
+                    TreeNode<K, V> x = new TreeNode<>(h, k, v, xpn);
+                    if (dir <= 0)
+                        xp.left = x;
+                    else
+                        xp.right = x;
+                    xp.next = x;
+                    x.parent = x.prev = xp;
+                    if (xpn != null)
+                        ((TreeNode<K, V>) xpn).prev = x;
+                    moveRootToFront(tab, balanceInsertion(root, x));
+                    return null;
+                }
+            }
         }
 
         private void removeTreeNode(SimpleHashMap<K, V> map, Node<K, V>[] tab, boolean movable) {

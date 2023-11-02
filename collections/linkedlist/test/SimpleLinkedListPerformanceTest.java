@@ -6,11 +6,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.LinkedList;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class SimpleLinkedListPerformanceTest {
     LinkedList<Integer> list;
     SimpleLinkedList<Integer> myList;
+    long start;
 
     @BeforeEach
     void prepareData() {
@@ -21,7 +20,7 @@ class SimpleLinkedListPerformanceTest {
     @Test
     void add() {
         // LinkedList
-        long start = System.currentTimeMillis();
+        start = System.currentTimeMillis();
         for (int i = 0; i < 1_000_000; i++) {
             list.add(i);
         }
@@ -38,7 +37,7 @@ class SimpleLinkedListPerformanceTest {
     @Test
     void addToIndex() {
         // LinkedList
-        long start = System.currentTimeMillis();
+        start = System.currentTimeMillis();
         for (int i = 0; i < 1_000_000; i++) {
             list.add(i, i);
         }
@@ -58,8 +57,10 @@ class SimpleLinkedListPerformanceTest {
         for (int i = 0; i < 10_000; i++) {
             list.add(i);
         }
-        long start = System.currentTimeMillis();
+
+        start = System.currentTimeMillis();
         for (int i = 0; i < 10_000; i++) {
+            //noinspection ResultOfMethodCallIgnored
             list.get(i);
         }
         System.out.println("get(): LinkedList took " + (System.currentTimeMillis() - start) + " ms");
@@ -68,6 +69,7 @@ class SimpleLinkedListPerformanceTest {
         for (int i = 0; i < 10_000; i++) {
             myList.add(i);
         }
+
         start = System.currentTimeMillis();
         for (int i = 0; i < 10_000; i++) {
             myList.get(i);
@@ -76,35 +78,13 @@ class SimpleLinkedListPerformanceTest {
     }
 
     @Test
-    void size() {
-        // LinkedList
-        for (int i = 0; i < 1_000_000; i++) {
-            list.add(i);
-        }
-        long start = System.currentTimeMillis();
-        for (int i = 0; i < 1_000_000; i++) {
-            list.size();
-        }
-        System.out.println("size(): LinkedList took " + (System.currentTimeMillis() - start) + " ms");
-
-        // SimpleLinkedList
-        for (int i = 0; i < 1_000_000; i++) {
-            myList.add(i);
-        }
-        start = System.currentTimeMillis();
-        for (int i = 0; i < 1_000_000; i++) {
-            myList.size();
-        }
-        System.out.println("size(): SimpleLinkedList took " + (System.currentTimeMillis() - start) + " ms");
-    }
-
-    @Test
     void remove() {
         // LinkedList
         for (int i = 0; i < 1_000_000; i++) {
             list.add(i);
         }
-        long start = System.currentTimeMillis();
+
+        start = System.currentTimeMillis();
         for (int i = 0; i < 1_000_000; i++) {
             list.remove(Integer.valueOf(i));
         }
@@ -114,6 +94,7 @@ class SimpleLinkedListPerformanceTest {
         for (int i = 0; i < 1_000_000; i++) {
             myList.add(i);
         }
+
         start = System.currentTimeMillis();
         for (int i = 0; i < 1_000_000; i++) {
             myList.remove(i);
@@ -127,7 +108,8 @@ class SimpleLinkedListPerformanceTest {
         for (int i = 0; i < 1_000_000; i++) {
             list.add(i);
         }
-        long start = System.currentTimeMillis();
+
+        start = System.currentTimeMillis();
         for (int i = 0; i < 1_000_000; i++) {
             list.removeFirst();
         }
@@ -137,6 +119,7 @@ class SimpleLinkedListPerformanceTest {
         for (int i = 0; i < 1_000_000; i++) {
             myList.add(i);
         }
+
         start = System.currentTimeMillis();
         for (int i = 0; i < 1_000_000; i++) {
             myList.removeFirst();
@@ -150,7 +133,8 @@ class SimpleLinkedListPerformanceTest {
         for (int i = 0; i < 1_000_000; i++) {
             list.add(i);
         }
-        long start = System.currentTimeMillis();
+
+        start = System.currentTimeMillis();
         for (int i = 0; i < 1_000_000; i++) {
             list.removeLast();
         }
@@ -160,10 +144,89 @@ class SimpleLinkedListPerformanceTest {
         for (int i = 0; i < 1_000_000; i++) {
             myList.add(i);
         }
+
         start = System.currentTimeMillis();
         for (int i = 0; i < 1_000_000; i++) {
             myList.removeLast();
         }
         System.out.println("removeLast(): SimpleLinkedList took " + (System.currentTimeMillis() - start) + " ms");
+    }
+
+    @Test
+    void contains() {
+        // LinkedList
+        for (int i = 0; i < 1_000; i++) {
+            list.add(i);
+        }
+
+        start = System.currentTimeMillis();
+        for (int i = 0; i < 1_000; i++) {
+            //noinspection ResultOfMethodCallIgnored
+            list.contains(i);
+        }
+        System.out.println("contains(): LinkedList took " + (System.currentTimeMillis() - start) + " ms");
+
+        // SimpleLinkedList
+        for (int i = 0; i < 1_000; i++) {
+            myList.add(i);
+        }
+
+        start = System.currentTimeMillis();
+        for (int i = 0; i < 1_000; i++) {
+            myList.contains(i);
+        }
+        System.out.println("contains(): SimpleLinkedList took " + (System.currentTimeMillis() - start) + " ms");
+    }
+
+    @Test
+    void size() {
+        // LinkedList
+        for (int i = 0; i < 1_000_000; i++) {
+            list.add(i);
+        }
+
+        start = System.currentTimeMillis();
+        for (int i = 0; i < 1_000_000; i++) {
+            //noinspection ResultOfMethodCallIgnored
+            list.size();
+        }
+        System.out.println("size(): LinkedList took " + (System.currentTimeMillis() - start) + " ms");
+
+        // SimpleLinkedList
+        for (int i = 0; i < 1_000_000; i++) {
+            myList.add(i);
+        }
+
+        start = System.currentTimeMillis();
+        for (int i = 0; i < 1_000_000; i++) {
+            myList.size();
+        }
+        System.out.println("size(): SimpleLinkedList took " + (System.currentTimeMillis() - start) + " ms");
+    }
+
+    @Test
+    void isEmpty() {
+        // LinkedList
+        for (int i = 0; i < 1_000_000; i++) {
+            list.add(i);
+        }
+
+        start = System.currentTimeMillis();
+        for (int i = 0; i < 1_000_000; i++) {
+            //noinspection ResultOfMethodCallIgnored
+            list.isEmpty();
+        }
+        System.out.println("isEmpty(): LinkedList took " + (System.currentTimeMillis() - start) + " ms");
+
+        // SimpleLinkedList
+        for (int i = 0; i < 1_000_000; i++) {
+            myList.add(i);
+        }
+
+        start = System.currentTimeMillis();
+        for (int i = 0; i < 1_000_000; i++) {
+            myList.isEmpty();
+        }
+        System.out.println("isEmpty(): SimpleLinkedList took " + (System.currentTimeMillis() - start) + " ms");
     }
 }

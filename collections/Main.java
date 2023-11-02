@@ -4,12 +4,16 @@ import collections.arraylist.SimpleArrayList;
 import collections.hashmap.SimpleHashMap;
 import collections.linkedlist.SimpleLinkedList;
 
+import java.util.HashMap;
+
 public class Main {
     public static void main(String[] args) {
         // SimpleLinkedList
         System.out.println("    SimpleLinkedList:");
         SimpleLinkedList<String> myLinkedList = new SimpleLinkedList<>();
         myLinkedList.add("zero");
+        System.out.println(myLinkedList.contains("zero"));
+        System.out.println(myLinkedList.contains("zer"));
         myLinkedList.add("one");
         myLinkedList.add("two");
         myLinkedList.add("three");
@@ -24,7 +28,7 @@ public class Main {
 
         System.out.println();
 
-        // SimpleHashMap
+//        // SimpleHashMap
         System.out.println("    SimpleHashMap:");
         SimpleHashMap<Integer, String> myHashMap = new SimpleHashMap<>();
         myHashMap.put(1, "one");
@@ -44,5 +48,12 @@ public class Main {
         myArrayList.add("two");
         myArrayList.add("three");
         myArrayList.print();
+
+        System.out.println();
+        HashMap<Integer, String> test = new HashMap<>();
+        test.put(2, "two");
+        System.out.println(test.get(2));
+        test.put(2, "anotherTwo");
+        System.out.println(test.get(2));
     }
 }

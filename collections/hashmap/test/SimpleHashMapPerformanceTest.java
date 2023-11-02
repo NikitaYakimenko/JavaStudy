@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SimpleHashMapPerformanceTest {
     Map<Integer, Integer> map;
     SimpleHashMap<Integer, Integer> myMap;
+    long start;
 
     @BeforeEach
     void prepareData() {
@@ -22,7 +23,7 @@ public class SimpleHashMapPerformanceTest {
     @Test
     void put() {
         // HashMap
-        long start = System.currentTimeMillis();
+        start = System.currentTimeMillis();
         for (int i = 0; i < 1_000_000; i++) {
             map.put(i, i);
         }
@@ -44,7 +45,7 @@ public class SimpleHashMapPerformanceTest {
             map.put(i, i);
         }
 
-        long start = System.currentTimeMillis();
+        start = System.currentTimeMillis();
         for (int i = 0; i < 1_000_000; i++) {
             map.get(i);
         }
@@ -69,7 +70,7 @@ public class SimpleHashMapPerformanceTest {
             map.put(i, i);
         }
 
-        long start = System.currentTimeMillis();
+        start = System.currentTimeMillis();
         for (int i = 0; i < 1_000_000; i++) {
             map.remove(i);
         }
@@ -94,7 +95,7 @@ public class SimpleHashMapPerformanceTest {
             map.put(i, i);
         }
 
-        long start = System.currentTimeMillis();
+        start = System.currentTimeMillis();
         for (int i = 0; i < 1_000_000; i++) {
             //noinspection ResultOfMethodCallIgnored
             map.containsKey(i);
@@ -120,7 +121,7 @@ public class SimpleHashMapPerformanceTest {
             map.put(i, i);
         }
 
-        long start = System.currentTimeMillis();
+        start = System.currentTimeMillis();
         for (int i = 0; i < 1_000_000; i++) {
             //noinspection ResultOfMethodCallIgnored
             map.size();
@@ -137,5 +138,31 @@ public class SimpleHashMapPerformanceTest {
             myMap.size();
         }
         System.out.println("size(): SimpleHashMap took " + (System.currentTimeMillis() - start) + " ms");
+    }
+
+    @Test
+    void isEmpty() {
+        // HashMap
+        for (int i = 0; i < 1_000_000; i++) {
+            map.put(i, i);
+        }
+
+        start = System.currentTimeMillis();
+        for (int i = 0; i < 1_000_000; i++) {
+            //noinspection ResultOfMethodCallIgnored
+            map.isEmpty();
+        }
+        System.out.println("isEmpty(): HashMap took " + (System.currentTimeMillis() - start) + " ms");
+
+        // SimpleHashMap
+        for (int i = 0; i < 1_000_000; i++) {
+            myMap.put(i, i);
+        }
+
+        start = System.currentTimeMillis();
+        for (int i = 0; i < 1_000_000; i++) {
+            myMap.isEmpty();
+        }
+        System.out.println("isEmpty(): SimpleHashMap took " + (System.currentTimeMillis() - start) + " ms");
     }
 }

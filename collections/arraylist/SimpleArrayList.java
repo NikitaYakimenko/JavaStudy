@@ -1,7 +1,5 @@
 package collections.arraylist;
 
-import jdk.internal.util.ArraysSupport;
-
 import java.util.Arrays;
 
 public class SimpleArrayList<V> {
