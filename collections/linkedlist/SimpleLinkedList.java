@@ -1,6 +1,5 @@
 package collections.linkedlist;
 
-import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
 public class SimpleLinkedList<V> {

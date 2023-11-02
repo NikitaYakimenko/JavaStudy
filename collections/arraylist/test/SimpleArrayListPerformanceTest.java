@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class SimpleArrayListPerformanceTest {
     ArrayList<Integer> list;
     SimpleArrayList<Integer> myList;
+    long start;
 
     @BeforeEach
     void prepareData() {
@@ -19,7 +20,7 @@ public class SimpleArrayListPerformanceTest {
     @Test
     void add() {
         // ArrayList
-        long start = System.currentTimeMillis();
+        start = System.currentTimeMillis();
         for (int i = 0; i < 1_000_000; i++) {
             list.add(i);
         }
@@ -36,7 +37,7 @@ public class SimpleArrayListPerformanceTest {
     @Test
     void addToIndex() {
         // ArrayList
-        long start = System.currentTimeMillis();
+        start = System.currentTimeMillis();
         for (int i = 0; i < 1_000_000; i++) {
             list.add(i, i);
         }
@@ -56,7 +57,8 @@ public class SimpleArrayListPerformanceTest {
         for (int i = 0; i < 1_000_000; i++) {
             list.add(i);
         }
-        long start = System.currentTimeMillis();
+
+        start = System.currentTimeMillis();
         for (int i = 0; i < 1_000_000; i++) {
             //noinspection ResultOfMethodCallIgnored
             list.get(i);
@@ -67,6 +69,7 @@ public class SimpleArrayListPerformanceTest {
         for (int i = 0; i < 1_000_000; i++) {
             myList.add(i);
         }
+
         start = System.currentTimeMillis();
         for (int i = 0; i < 1_000_000; i++) {
             myList.get(i);
@@ -79,7 +82,9 @@ public class SimpleArrayListPerformanceTest {
         for (int i = 0; i < 1_000_000; i++) {
             list.add(i);
         }
-        long start = System.currentTimeMillis();
+
+        start = System.currentTimeMillis();
+        //noinspection
         for (int i = 999_999; i > 0; i--) {
             list.remove(i);
         }
@@ -89,6 +94,7 @@ public class SimpleArrayListPerformanceTest {
         for (int i = 0; i < 1_000_000; i++) {
             myList.add(i);
         }
+
         start = System.currentTimeMillis();
         for (int i = 999_999; i > 0; i--) {
             myList.remove(i);
@@ -102,7 +108,8 @@ public class SimpleArrayListPerformanceTest {
         for (int i = 0; i < 10_000; i++) {
             list.add(i);
         }
-        long start = System.currentTimeMillis();
+
+        start = System.currentTimeMillis();
         for (int i = 0; i < 10_000; i++) {
             //noinspection ResultOfMethodCallIgnored
             list.contains(i);
@@ -113,6 +120,7 @@ public class SimpleArrayListPerformanceTest {
         for (int i = 0; i < 10_000; i++) {
             myList.add(i);
         }
+
         start = System.currentTimeMillis();
         for (int i = 0; i < 10_000; i++) {
             myList.contains(i);
@@ -126,7 +134,8 @@ public class SimpleArrayListPerformanceTest {
         for (int i = 0; i < 1_000_000; i++) {
             list.add(i);
         }
-        long start = System.currentTimeMillis();
+
+        start = System.currentTimeMillis();
         for (int i = 0; i < 1_000_000; i++) {
             //noinspection ResultOfMethodCallIgnored
             list.size();
@@ -137,6 +146,7 @@ public class SimpleArrayListPerformanceTest {
         for (int i = 0; i < 1_000_000; i++) {
             myList.add(i);
         }
+
         start = System.currentTimeMillis();
         for (int i = 0; i < 1_000_000; i++) {
             myList.size();
@@ -150,7 +160,8 @@ public class SimpleArrayListPerformanceTest {
         for (int i = 0; i < 1_000_000; i++) {
             list.add(i);
         }
-        long start = System.currentTimeMillis();
+
+        start = System.currentTimeMillis();
         for (int i = 0; i < 1_000_000; i++) {
             //noinspection ResultOfMethodCallIgnored
             list.isEmpty();
@@ -161,6 +172,7 @@ public class SimpleArrayListPerformanceTest {
         for (int i = 0; i < 1_000_000; i++) {
             myList.add(i);
         }
+
         start = System.currentTimeMillis();
         for (int i = 0; i < 1_000_000; i++) {
             myList.isEmpty();

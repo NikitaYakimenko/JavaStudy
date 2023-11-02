@@ -170,10 +170,8 @@ public class SimpleArrayList<V> {
         int minLength = oldLength + minGrowth;
         if (minLength < 0) {
             throw new OutOfMemoryError("Required array length " + oldLength + " + " + minGrowth + " is too large");
-        } else if (minLength <= MAX_ARRAY_LENGTH) {
-            return MAX_ARRAY_LENGTH;
         } else {
-            return minLength;
+            return Math.max(minLength, MAX_ARRAY_LENGTH);
         }
     }
 }
